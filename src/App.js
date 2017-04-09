@@ -25,6 +25,10 @@ class App extends Component {
           <IconInput icon="cog">
             <RangeAndNumberInput min="0" max="100"/>
           </IconInput>
+
+          <IconInput icon="cog">
+            <textarea></textarea>
+          </IconInput>
         </form>
       </div>
     );

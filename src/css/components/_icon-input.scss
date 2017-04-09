@@ -7,10 +7,18 @@
         top:6px;
     }
 
-    input, select{
+    input, select, textarea{
         padding:3px;
-        padding-left:20px;
         width:100%;
         display:block;
+    }
+
+    input, select{
+        padding-left:20px;
+    }
+
+
+    textarea{
+        text-indent:20px;
     }
 }
