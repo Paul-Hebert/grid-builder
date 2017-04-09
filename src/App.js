@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import IconInput from './components/IconInput';
-import RangeAndNumberInput from './components/RangeAndNumberInput';
+import IconInput from './components/forms/IconInput';
+import RangeAndNumberInput from './components/forms/RangeAndNumberInput';
 
 class App extends Component {
   render() {
