@@ -1,3 +1,6 @@
+@import "/general/_base";
+@import "/general/_forms";
+
 @import "/components/layout/_header";
 @import "/components/layout/_footer";
 
@@ -9,11 +12,3 @@
 @import "/components/forms/_icon-input";
 @import "/components/forms/_grid-form";
 @import "/components/forms/_range-and-number-input";
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    background:#eee;
-}

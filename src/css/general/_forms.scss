@@ -1,0 +1,13 @@
+label{
+    margin:5px 0;
+}
+
+select, textarea, input{
+    margin:3px 0;
+}
+
+select, textarea, input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button]){
+    border:1px solid #ddd;
+    padding:3px;
+    display:block;
+}

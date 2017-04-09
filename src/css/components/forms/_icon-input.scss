@@ -8,17 +8,14 @@
     }
 
     input, select, textarea{
-        padding:3px;
         width:100%;
-        display:block;
     }
 
-    input, select{
-        padding-left:20px;
-    }
-
-
-    textarea{
+    input, textarea{
         text-indent:20px;
+    }
+
+    select {
+       padding-left: 20px;
     }
 }
