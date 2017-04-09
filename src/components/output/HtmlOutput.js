@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class HtmlOutput extends Component {
   render() {
     return (
-        <code>HTML Output</code>
+        <code className="html-output">HTML Output</code>
     );
   }
 }

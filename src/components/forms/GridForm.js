@@ -5,7 +5,7 @@ import RangeAndNumberInput from './RangeAndNumberInput';
 class GridForm extends Component {
   render() {
     return (
-        <form autoComplete="off">
+        <form autoComplete="off" className="grid-form">
           <IconInput icon="search">
             <input type="text" />
           </IconInput>

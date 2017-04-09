@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class CssOutput extends Component {
   render() {
     return (
-        <code>CSS Output</code>
+        <code className="css-output">CSS Output</code>
     );
   }
 }

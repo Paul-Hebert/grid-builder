@@ -6,7 +6,7 @@ import HtmlOutput from "./HtmlOutput";
 class Output extends Component {
   render() {
     return (
-        <figure>
+        <figure className="output">
             <GridOutput />
             <CssOutput />
             <HtmlOutput />
