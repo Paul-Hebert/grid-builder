@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GridOutput from "./GridOutput";
 import CssOutput from "./CssOutput";
-import HtmlOutput from "./HtmlOutput";
 
 class Output extends Component {
   render() {
@@ -9,7 +8,6 @@ class Output extends Component {
         <figure className="output">
             <GridOutput />
             <CssOutput />
-            <HtmlOutput />
         </figure>
     );
   }

@@ -8,6 +8,6 @@ select, textarea, input{
 
 select, textarea, input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button]){
     border:1px solid #ddd;
-    padding:3px;
+    padding:5px;
     display:block;
 }

@@ -6,18 +6,25 @@ class GridForm extends Component {
   render() {
     return (
         <form autoComplete="off" className="grid-form">
-          <IconInput icon="search">
-            <input type="text" />
-          </IconInput>
+          <label>
+            Preprocessors
+            <IconInput icon="code">
+              <select>
+                <option value="None">None</option>
+                <option value="SCSS">SCSS</option>
+                <option value="SASS">SASS</option>
+                <option value="LESS">LESS</option>
+                <option value="Stylus">Stylus</option>
+              </select>
+            </IconInput>
+          </label>
 
           <IconInput icon="arrow-right">
             <input type="button" value="Go!"/>
           </IconInput>
 
           <IconInput icon="cog">
-            <select>
-              <option>Test</option>
-            </select>
+            <input type="text" />
           </IconInput>
 
 
