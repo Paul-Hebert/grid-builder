@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import Column from './Column.js';
-import Row from './Row.js';
+import ColumnOutput from './ColumnOutput.js';
+import Row from '../grid/Row.js';
 
 class GridOutput extends Component {
   render() {
     return (
         <figure className="grid-output">
           <Row>
-            <Column width="9" breakPointName="md"/>
-            <Column width="3" breakPointName="md"/>
+            <ColumnOutput width="9" breakPointName="md"/>
+            <ColumnOutput width="3" breakPointName="md"/>
           </Row>
           <Row>
-            <Column width="6" breakPointName="md"/>
-            <Column width="6" breakPointName="md"/>
+            <ColumnOutput width="6" breakPointName="md"/>
+            <ColumnOutput width="6" breakPointName="md"/>
           </Row>
           <Row>
-            <Column width="4" breakPointName="md"/>
-            <Column width="4" breakPointName="md"/>
-            <Column width="4" breakPointName="md"/>
+            <ColumnOutput width="4" breakPointName="md"/>
+            <ColumnOutput width="4" breakPointName="md"/>
+            <ColumnOutput width="4" breakPointName="md"/>
           </Row>
         </figure>
     );

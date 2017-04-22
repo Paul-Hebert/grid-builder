@@ -1,3 +1,7 @@
+form{
+    @include block();
+}
+
 label{
     margin:5px 0;
 }
@@ -10,4 +14,10 @@ select, textarea, input:not([type=checkbox]):not([type=radio]):not([type=range])
     border:1px solid #ddd;
     padding:5px;
     display:block;
+}
+
+button, input[type=button], input[type=submit], .button{
+    @include dark-block();
+    @include rounded();
+    border:0;
 }

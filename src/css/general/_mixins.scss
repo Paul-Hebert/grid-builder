@@ -1,0 +1,15 @@
+@mixin dark-block{
+    background:$primary-color;
+    color:$white;
+
+    @include block();
+}
+
+@mixin block(){
+    padding:15px;
+    display:block;
+}
+
+@mixin rounded(){
+    border-radius:15px;
+}
