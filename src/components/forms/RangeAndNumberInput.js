@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 
 class IconInput extends Component {
-  constructor(){
+  constructor(props){
     super();
     this.state ={
-        value:50
+        value: props.default
     };
   }
-  update(event){
+  update(e){
     this.setState({
-        value:event.target.value
+        value:e.target.value
     });
+
+    this.props.handler(this.props.name, e.target.value);
   }
   render() {
     return (

@@ -1,17 +1,20 @@
 .grid-output{
     background:$third-color;
-    @include block();
-    padding-left: 45px;
+    
+    figure{
+        padding-left: 15px;
+        width: calc(100% + 15px);
 
-    div[class^='col']{
-        background:$secondary-color;
-        text-align:center;
-        border-color:$third-color;
-        border-width:0 1px;
-        border-style:solid;
+        div[class^='col']{
+            background:$secondary-color;
+            text-align:center;
+            border-color:$third-color;
+            border-width:0 1px;
+            border-style:solid;
 
-        .column-content{
-            @include dark-block();
+            .column-content{
+                @include dark-block();
+            }
         }
     }
 }

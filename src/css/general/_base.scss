@@ -5,3 +5,11 @@
 body{
     background:#eee;
 }
+
+section{
+    @include block();
+
+    header{
+        padding: $base-padding 0;
+    }
+}

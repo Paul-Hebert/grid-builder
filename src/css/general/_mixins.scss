@@ -6,10 +6,10 @@
 }
 
 @mixin block(){
-    padding:15px;
+    padding:$base-padding;
     display:block;
 }
 
 @mixin rounded(){
-    border-radius:15px;
+    border-radius:5px;
 }

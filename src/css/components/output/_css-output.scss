@@ -1,3 +1,8 @@
 .css-output{
-    @include block();
+    background:$secondary-color;
+
+    pre{
+        height:300px;
+        overflow:scroll;
+    }
 }
