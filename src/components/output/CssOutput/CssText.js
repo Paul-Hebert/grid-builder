@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CssOutput extends Component {
+class CssText extends Component {
   render() {
     return (
         <section className="css-output">
@@ -15,4 +15,4 @@ class CssOutput extends Component {
   }
 }
 
-export default CssOutput;
+export default CssText;

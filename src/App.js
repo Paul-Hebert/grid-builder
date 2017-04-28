@@ -27,7 +27,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <GridForm preprocessor={this.state.form.preprocessor} columns={this.state.form.columns} formHandler={this.formHandler.bind(this)}/>
-        <Output />
+        <Output columns={this.state.form.columns}/>
         <Footer />
       </div>
     );

@@ -4,6 +4,11 @@ import Row from '../grid/Row.js';
 
 class GridOutput extends Component {
   render() {
+    var columns = [];
+
+    for(var i = 0; i < this.props.columns; i++){
+      columns.push(<ColumnOutput width="1" breakPointName="md" key={i}/>);
+    }
     return (
         <section className="grid-output">
           <header>
@@ -11,17 +16,7 @@ class GridOutput extends Component {
           </header>
           <figure>
             <Row>
-              <ColumnOutput width="9" breakPointName="md"/>
-              <ColumnOutput width="3" breakPointName="md"/>
-            </Row>
-            <Row>
-              <ColumnOutput width="6" breakPointName="md"/>
-              <ColumnOutput width="6" breakPointName="md"/>
-            </Row>
-            <Row>
-              <ColumnOutput width="4" breakPointName="md"/>
-              <ColumnOutput width="4" breakPointName="md"/>
-              <ColumnOutput width="4" breakPointName="md"/>
+              {columns}
             </Row>
           </figure>
         </section>
