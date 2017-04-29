@@ -6,6 +6,36 @@ class CssOutput extends Component {
   render() {
     var nodes = [
       {
+        selector: ".row",
+        rules: [
+          {
+            name:"width",
+            value: "100%"
+          },
+          {
+            name:"margin-bottom",
+            value:"5px"
+          }
+        ]
+      },
+      {
+        selector: ".row::after",
+        rules: [
+          {
+            name: "content",
+            value: "''"
+          },
+          {
+            name: "display",
+            value: "table"
+          },
+          {
+            name: "clear",
+            value: "both"
+          }
+        ]
+      },
+      {
         selector: "[class^='col-'], div[class*=' col-']",
         rules: [
           {
@@ -25,43 +55,24 @@ class CssOutput extends Component {
             value: "0 " + this.props.gutter.value + this.props.gutter.unit
           }
         ]
-      },
-      {
-        selector: ".row",
-        rules: [
-          {
-            name:"width",
-            value: "100%"
-          },
-          {
-            name:"margin-bottom",
-            value:"5px"
-          }
-
-        ]
-      },
-      {
-        selector: ".row::after",
-        rules: [
-          {
-            name: "content",
-            value: "''"
-          },
-          {
-            name: "display",
-            value: "table"
-          },
-          {
-            name: "clear",
-            value: "both"
-          }
-        ]
       }
     ];
 
+    for(var i = 1; i <= this.props.columns; i++){
+      nodes.push({
+        selector: ".col-" + i,
+        rules: [
+          {
+            name: "width",
+            value: (100 / this.props.columns * i) + "%"
+          }
+        ]
+      });
+    }
+
     var ruleText = '';
 
-    for(var i = 0; i < nodes.length; i++){
+    for(i = 0; i < nodes.length; i++){
         ruleText += nodes[i].selector + "{";
         
         for(var x = 0; x < nodes[i].rules.length; x++){

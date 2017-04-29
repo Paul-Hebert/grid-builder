@@ -28,6 +28,8 @@ class GridForm extends Component {
       currentState[names[0]] = value;
     } else if(names.length === 2){
       currentState[names[0]][names[1]] = value;
+    } else if(names.length === 3){
+      currentState[names[0]][names[1]][names[2]] = value;
     }
 
     this.setState(currentState);

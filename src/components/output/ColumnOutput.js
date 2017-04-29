@@ -4,9 +4,9 @@ import Column from '../grid/Column.js';
 class ColumnOutput extends Component {
   render() {
     return (
-        <Column width={this.props.width} breakPointName={this.props.breakPointName}>
+        <Column width={this.props.width}>
           <code className="column-content">
-            &lt;div class="col-{this.props.breakPointName}-{this.props.width}"&gt;
+            {this.props.width}
           </code>
         </Column>
     );
