@@ -6,8 +6,8 @@ class Output extends Component {
   render() {
     return (
         <figure className="output">
-            <GridOutput columns={this.props.columns}/>
-            <CssOutput  columns={this.props.columns}/>
+            <GridOutput columns={this.props.settings.columns}/>
+            <CssOutput  columns={this.props.settings.columns} gutter={this.props.settings.gutter}/>
         </figure>
     );
   }

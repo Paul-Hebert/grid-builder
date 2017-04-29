@@ -12,7 +12,7 @@ class IconInput extends Component {
         value:e.target.value
     });
 
-    this.props.handler(this.props.name, e.target.value);
+    this.props.handler(this.props.names, e.target.value);
   }
   render() {
     return (

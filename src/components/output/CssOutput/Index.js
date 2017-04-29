@@ -15,6 +15,14 @@ class CssOutput extends Component {
           {
             name: "float",
             value: "left"
+          },
+          {
+            name: "box-sizing",
+            value: "border-box"
+          },
+          {
+            name: "padding",
+            value: "0 " + this.props.gutter.value + this.props.gutter.unit
           }
         ]
       },

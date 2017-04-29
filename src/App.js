@@ -11,7 +11,11 @@ class App extends Component {
     this.state = {
       form :{
         preprocessor: "none",
-        columns: 12
+        columns: 12,
+        gutter: {
+          value:10,
+          unit:"px"
+        }
       }
     }
   }
@@ -26,8 +30,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <GridForm preprocessor={this.state.form.preprocessor} columns={this.state.form.columns} formHandler={this.formHandler.bind(this)}/>
-        <Output columns={this.state.form.columns}/>
+        <GridForm settings={this.state.form} formHandler={this.formHandler.bind(this)}/>
+        <Output settings={this.state.form}/>
         <Footer />
       </div>
     );

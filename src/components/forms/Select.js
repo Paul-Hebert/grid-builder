@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Select extends Component {
   update(e){
-    this.props.handler(this.props.name, e.target.value);
+    this.props.handler(this.props.names, e.target.value);
   }
   render() {
     return (

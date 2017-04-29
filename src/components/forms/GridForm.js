@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import IconInput from './IconInput';
 import Select from './Select';
+import UnitSelect from './UnitSelect';
 import RangeAndNumberInput from './RangeAndNumberInput';
 
 class GridForm extends Component {
@@ -8,22 +9,30 @@ class GridForm extends Component {
     super();
 
     this.state ={
-        preprocessor: props.preprocessor,
-        columns: props.columns
+        preprocessor: props.settings.preprocessor,
+        columns: props.settings.columns,
+        gutter: {
+          value: props.settings.gutter.value,
+          unit: props.settings.gutter.unit
+        }
     };
 
     this.handler = this.handler.bind(this);
   }
 
-  handler(name,value) {    
-    var key = name;
-    var val = value;
-    var obj  = {};
-    obj[key] = val;
+  handler(names, value) {
+    var currentState = this.state;
 
-    this.setState(obj, ()=>{
-      this.props.formHandler(this.state);
-    });
+    // TODO: Figure out a better way to drill down object properties using arrays and bracket notation
+    if(names.length === 1){
+      currentState[names[0]] = value;
+    } else if(names.length === 2){
+      currentState[names[0]][names[1]] = value;
+    }
+
+    this.setState(currentState);
+
+    this.props.formHandler(currentState);
   }
 
   render() {
@@ -33,7 +42,7 @@ class GridForm extends Component {
             Preprocessors
 
             <IconInput icon="code">
-              <Select handler={this.handler} name="preprocessor">
+              <Select handler={this.handler} names={["preprocessor"]}>
                 <option value="None">None</option>
                 <option value="SCSS">SCSS</option>
                 <option value="SASS">SASS</option>
@@ -47,7 +56,16 @@ class GridForm extends Component {
             Columns
 
             <IconInput icon="align-right" additionalClasses="fa-rotate-270">
-              <RangeAndNumberInput min="2" max="18" default={this.state.columns} handler={this.handler} name="columns"/>
+              <RangeAndNumberInput min="2" max="18" default={this.state.columns} handler={this.handler} names={["columns"]}/>
+            </IconInput>
+          </label>
+          
+          <label>
+            Gutters
+
+            <IconInput icon="align-right">
+              <RangeAndNumberInput min="0" max="100" default={this.state.gutter.value} handler={this.handler} names={["gutter","value"]}/>
+              <UnitSelect handler={this.handler} value={this.state.gutter.unit} names={["gutter","unit"]}/>
             </IconInput>
           </label>
         </form>
