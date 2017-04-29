@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CssBeautify from 'cssbeautify/cssbeautify.js';
 
 class CssText extends Component {
   render() {
@@ -8,7 +9,7 @@ class CssText extends Component {
             <h2>CSS Output</h2>
           </header>
           <pre>
-            <code>{this.props.children}</code>
+            <code>{CssBeautify(this.props.children)}</code>
           </pre>
         </section>
     );
