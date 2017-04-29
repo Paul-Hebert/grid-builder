@@ -8,7 +8,7 @@ class CssText extends Component {
             <h2>CSS Output</h2>
           </header>
           <pre>
-            <code>/* Code */</code>
+            <code>{this.props.children}</code>
           </pre>
         </section>
     );
