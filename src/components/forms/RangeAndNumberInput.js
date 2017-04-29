@@ -21,12 +21,14 @@ class IconInput extends Component {
                    value={this.state.value} 
                    min={this.props.min} 
                    max={this.props.max}
+                   step={this.props.step}
                    onChange={this.update.bind(this)}
             />
             <input type="range" 
                    value={this.state.value} 
                    min={this.props.min} 
                    max={this.props.max}
+                   step={this.props.step}
                    onChange={this.update.bind(this)}
             />
         </div>

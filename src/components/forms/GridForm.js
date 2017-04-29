@@ -58,7 +58,7 @@ class GridForm extends Component {
             Columns
 
             <IconInput icon="align-right" additionalClasses="fa-rotate-270">
-              <RangeAndNumberInput min="2" max="18" default={this.state.columns} handler={this.handler} names={["columns"]}/>
+              <RangeAndNumberInput min="2" max="18" step="1" default={this.state.columns} handler={this.handler} names={["columns"]}/>
             </IconInput>
           </label>
           
@@ -66,7 +66,7 @@ class GridForm extends Component {
             Gutters
 
             <IconInput icon="align-right">
-              <RangeAndNumberInput min="0" max="100" default={this.state.gutter.value} handler={this.handler} names={["gutter","value"]}/>
+              <RangeAndNumberInput min="0" max="30" step="0.01" default={this.state.gutter.value} handler={this.handler} names={["gutter","value"]}/>
               <UnitSelect handler={this.handler} value={this.state.gutter.unit} names={["gutter","unit"]}/>
             </IconInput>
           </label>
