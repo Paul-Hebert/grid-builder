@@ -40,7 +40,7 @@ class CssOutput extends Component {
         rules: [
           {
             name: "width",
-            value: (100/this.props.columns) + "%"
+            value: (100/this.props.settings.columns) + "%"
           },
           {
             name: "float",
@@ -52,19 +52,19 @@ class CssOutput extends Component {
           },
           {
             name: "padding",
-            value: "0 " + this.props.gutter.value + this.props.gutter.unit
+            value: "0 " + this.props.settings.gutter.value + this.props.settings.gutter.unit
           }
         ]
       }
     ];
 
-    for(var i = 1; i <= this.props.columns; i++){
+    for(var i = 1; i <= this.props.settings.columns; i++){
       nodes.push({
         selector: ".col-" + i,
         rules: [
           {
             name: "width",
-            value: (100 / this.props.columns * i) + "%"
+            value: (100 / this.props.settings.columns * i) + "%"
           }
         ]
       });
@@ -83,9 +83,9 @@ class CssOutput extends Component {
     }
 
     return (
-      <div className="css-output">
+      <div>
         <StyleSheet>{ruleText}</StyleSheet>
-        <CssText>{ruleText}</CssText>
+        <CssText preprocessor={this.props.settings.preprocessor}>{ruleText}</CssText>
       </div>
     )
   }

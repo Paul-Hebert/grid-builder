@@ -45,7 +45,7 @@ class GridForm extends Component {
 
             <IconInput icon="code">
               <Select handler={this.handler} names={["preprocessor"]}>
-                <option value="None">None</option>
+                <option value="CSS">None</option>
                 <option value="SCSS">SCSS</option>
                 <option value="SASS">SASS</option>
                 <option value="LESS">LESS</option>

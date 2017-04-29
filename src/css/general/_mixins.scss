@@ -13,3 +13,11 @@
 @mixin rounded(){
     border-radius:5px;
 }
+
+@mixin clearfix(){
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}

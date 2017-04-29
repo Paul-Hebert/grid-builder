@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state = {
       form :{
-        preprocessor: "none",
+        preprocessor: "CSS",
         columns: 12,
         gutter: {
           value:10,

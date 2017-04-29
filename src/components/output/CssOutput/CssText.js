@@ -6,7 +6,7 @@ class CssText extends Component {
     return (
         <section className="css-output">
           <header>
-            <h2>CSS Output</h2>
+            <h2>{this.props.preprocessor} Output</h2>
           </header>
           <pre>
             <code>{CssBeautify(this.props.children)}</code>

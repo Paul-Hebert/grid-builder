@@ -7,7 +7,7 @@ class Output extends Component {
     return (
         <figure className="output">
             <GridOutput columns={this.props.settings.columns}/>
-            <CssOutput  columns={this.props.settings.columns} gutter={this.props.settings.gutter}/>
+            <CssOutput  settings={this.props.settings}/>
         </figure>
     );
   }
