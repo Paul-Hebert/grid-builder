@@ -17,6 +17,37 @@ class CssOutput extends Component {
             value: "left"
           }
         ]
+      },
+      {
+        selector: ".row",
+        rules: [
+          {
+            name:"width",
+            value: "100%"
+          },
+          {
+            name:"margin-bottom",
+            value:"5px"
+          }
+
+        ]
+      },
+      {
+        selector: ".row::after",
+        rules: [
+          {
+            name: "content",
+            value: "''"
+          },
+          {
+            name: "display",
+            value: "table"
+          },
+          {
+            name: "clear",
+            value: "both"
+          }
+        ]
       }
     ];
 
