@@ -3,7 +3,11 @@
     width:25%;
     @include ui-column();
 
-    .declaration{
-        padding-left:30px;
+    pre{
+        overflow:auto;
+
+        .declaration{
+            padding-left:30px;
+        }
     }
 }

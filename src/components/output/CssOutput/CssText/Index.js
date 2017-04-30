@@ -8,8 +8,7 @@ class CssText extends Component {
             <h2>{this.props.preprocessor} Output</h2>
           </header>
           <pre>
-            {/* TODO: Convert this section to React JSX instead of HTML string */}
-            <code dangerouslySetInnerHTML={{ __html: this.props.children }} />
+            <code>{this.props.children}</code>
           </pre>
         </section>
     );

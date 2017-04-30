@@ -24,13 +24,13 @@ class GridForm extends Component {
     var currentState = this.state;
 
     // TODO: Figure out a better way to drill down object properties using arrays and bracket notation
-    if(names.length === 1){
-      currentState[names[0]] = value;
-    } else if(names.length === 2){
-      currentState[names[0]][names[1]] = value;
-    } else if(names.length === 3){
-      currentState[names[0]][names[1]][names[2]] = value;
-    }
+    let ref = names.reduce((p, c, i) => {
+      return p[c];
+    }, currentState)
+
+    console.log(ref);
+
+    ref = value;
 
     this.setState(currentState);
 

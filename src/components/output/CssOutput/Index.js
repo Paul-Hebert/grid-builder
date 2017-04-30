@@ -1,16 +1,57 @@
 import React, { Component } from 'react';
 import StyleSheet from "./StyleSheet";
-import CssText from "./CssText";
+import CssText from "./CssText/Index";
+import Declaration from "./CssText/RuleSet/Declaration";
+import RuleSet from "./CssText/RuleSet/Index";
+import SingleLine from "./CssText/Comments/SingleLine";
+import MultiLine from "./CssText/Comments/MultiLine";
+import Fancy from "./CssText/Comments/Fancy";
+import ExtraFancy from "./CssText/Comments/ExtraFancy";
 
 class CssOutput extends Component {
   render() {
     var nodes = [
       {
         type: "comment",
+        style:"multi-line",
+        rows:[
+          {
+            value: "Multi"
+          },
+          {
+            value: "Line"
+          },
+          {
+            value: "Comment"
+          }
+        ]
+      },
+      {
+        type: "comment",
+        style:"fancy",
+        rows:[
+          {
+            value: "Fancy Multi Line Comment"
+          }
+        ]
+      },
+      {
+        type: "comment",
+        style:"extra-fancy",
+        rows:[
+          {
+            value: "Extra Fancy Multi Line Comment"
+          }
+        ]
+      },
+      {
+        type: "comment",
         style:"single-line",
-        rows:{
-          value: "Custom CSS Grid"
-        }
+        rows:[
+          {
+            value: "Single Line Comment"
+          }
+        ]
       },
       {
         type: "code",
@@ -82,31 +123,53 @@ class CssOutput extends Component {
     }
 
     var styleSheetText = '';
-    var cssText = '';
+    var cssText = [];
 
-    {/* TODO: Convert the cssText section to React JSX instead of HTML string */}
     for(i = 0; i < nodes.length; i++){
       if(nodes[i].type === "code"){
-        styleSheetText += nodes[i].selector + "{";
-        cssText += "<div><span class='selector'>" + nodes[i].selector + "</span><span class='bracket'>{</span></div>";
-        
+        var declarations = [];
+
         for(var x = 0; x < nodes[i].rules.length; x++){
-            styleSheetText += nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";";
-            cssText += "<div class='declaration'><span class='name'>" + nodes[i].rules[x].name + "</span><span class='colon'>:</span><span class='value'>" + nodes[i].rules[x].value + "</span><span class='semicolon'>;</span></div>";
+            styleSheetText += nodes[i].selector + "{" +
+            nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";}";
+
+            declarations.push(<Declaration name={nodes[i].rules[x].name} value={nodes[i].rules[x].value} key={x}/>)
         }
 
-        styleSheetText += "}";
-        cssText += "<div class='bracket'>" + "}" + "</div>";
+        cssText.push(<RuleSet selector={nodes[i].selector} key={i}>{declarations}</RuleSet>);
       } else if(nodes[i].type === "comment"){
         if(nodes[i].style === "single-line"){
-          styleSheetText += "/*" + nodes[i].rows.value + "*/";
-          cssText += "<div class='comment'>" + "/*" + nodes[i].rows.value + "*/" + "</div>";
+          cssText.push(<SingleLine key={i}>{nodes[i].rows[0].value}</SingleLine>);
+        } else if(nodes[i].style === "multi-line"){
+          var commentLines = [];
+
+          for(x = 0; x < nodes[i].rows.length; x++){
+            commentLines.push(<div className='comment-line' key={x}>{nodes[i].rows[x].value}</div>);
+          }
+
+          cssText.push(<MultiLine key={i}>{commentLines}</MultiLine>);
+        } else if(nodes[i].style === "fancy"){
+          commentLines = [];
+
+          for(x = 0; x < nodes[i].rows.length; x++){
+            commentLines.push(<div className='comment-line' key={x}>{nodes[i].rows[x].value}</div>);
+          }
+
+          cssText.push(<Fancy key={i}>{commentLines}</Fancy>);
+        } else if(nodes[i].style === "extra-fancy"){
+          commentLines = [];
+
+          for(x = 0; x < nodes[i].rows.length; x++){
+            commentLines.push(<div className='comment-line' key={x}>{nodes[i].rows[x].value}</div>);
+          }
+
+          cssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);
         }
       } else{
-        console.log("Incorrect node type");
+        console.error("Incorrect node type");
       }
 
-      cssText += "<div>&nbsp;</div>";
+      cssText.push(<div key={i + "-break"}>&nbsp;</div>);
     }
 
     return (
