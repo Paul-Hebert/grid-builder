@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CssBeautify from 'cssbeautify/cssbeautify.js';
 
 class CssText extends Component {
   render() {
@@ -9,7 +8,8 @@ class CssText extends Component {
             <h2>{this.props.preprocessor} Output</h2>
           </header>
           <pre>
-            <code>{CssBeautify(this.props.children)}</code>
+            {/* TODO: Convert this section to React JSX instead of HTML string */}
+            <code dangerouslySetInnerHTML={{ __html: this.props.children }} />
           </pre>
         </section>
     );
