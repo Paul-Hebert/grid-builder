@@ -6,6 +6,14 @@ class CssOutput extends Component {
   render() {
     var nodes = [
       {
+        type: "comment",
+        style:"single-line",
+        rows:{
+          value: "Custom CSS Grid"
+        }
+      },
+      {
+        type: "code",
         selector: ".row",
         rules: [
           {
@@ -19,6 +27,7 @@ class CssOutput extends Component {
         ]
       },
       {
+        type: "code",
         selector: ".row::after",
         rules: [
           {
@@ -36,6 +45,7 @@ class CssOutput extends Component {
         ]
       },
       {
+        type: "code",
         selector: "[class^='col-'], div[class*=' col-']",
         rules: [
           {
@@ -60,6 +70,7 @@ class CssOutput extends Component {
 
     for(var i = 1; i <= this.props.settings.columns; i++){
       nodes.push({
+        type: "code",
         selector: ".col-" + i,
         rules: [
           {
@@ -73,6 +84,7 @@ class CssOutput extends Component {
     var ruleText = '';
 
     for(i = 0; i < nodes.length; i++){
+      if(nodes[i].type === "code"){
         ruleText += nodes[i].selector + "{";
         
         for(var x = 0; x < nodes[i].rules.length; x++){
@@ -80,6 +92,13 @@ class CssOutput extends Component {
         }
 
         ruleText += "}";
+      } else if(nodes[i].type === "comment"){
+        if(nodes[i].style === "single-line"){
+          ruleText += "/*" + nodes[i].rows.value + "*/";
+        }
+      } else{
+        console.log("Incorrect node type");
+      }
     }
 
     return (
