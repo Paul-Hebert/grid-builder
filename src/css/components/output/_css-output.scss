@@ -6,8 +6,24 @@
     pre{
         overflow:auto;
 
-        .declaration{
-            padding-left:30px;
+        .comment{
+            color: slategray;
+        }
+
+        .bracket, .colon, .semicolon{
+            color:#999;
+        }
+
+        .selector{
+            color:#690;
+        }
+
+        .name{
+            color: #905;
+        }
+
+        .value{
+            color:#222;
         }
     }
 }

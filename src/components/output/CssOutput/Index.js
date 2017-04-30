@@ -7,6 +7,7 @@ import SingleLine from "./CssText/Comments/SingleLine";
 import MultiLine from "./CssText/Comments/MultiLine";
 import Fancy from "./CssText/Comments/Fancy";
 import ExtraFancy from "./CssText/Comments/ExtraFancy";
+import Tab from "./CssText/Tab";
 
 class CssOutput extends Component {
   render() {
@@ -144,7 +145,7 @@ class CssOutput extends Component {
           var commentLines = [];
 
           for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}>{nodes[i].rows[x].value}</div>);
+            commentLines.push(<div className='comment-line' key={x}><Tab/>{nodes[i].rows[x].value}</div>);
           }
 
           cssText.push(<MultiLine key={i}>{commentLines}</MultiLine>);
@@ -152,7 +153,7 @@ class CssOutput extends Component {
           commentLines = [];
 
           for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}>{nodes[i].rows[x].value}</div>);
+            commentLines.push(<div className='comment-line' key={x}><Tab/>{nodes[i].rows[x].value}</div>);
           }
 
           cssText.push(<Fancy key={i}>{commentLines}</Fancy>);
@@ -160,7 +161,7 @@ class CssOutput extends Component {
           commentLines = [];
 
           for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}>{nodes[i].rows[x].value}</div>);
+            commentLines.push(<div className='comment-line' key={x}><Tab/>{nodes[i].rows[x].value}</div>);
           }
 
           cssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);
