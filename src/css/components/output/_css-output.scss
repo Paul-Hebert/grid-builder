@@ -2,4 +2,8 @@
     background:$secondary-color;
     width:25%;
     @include ui-column();
+
+    .declaration{
+        padding-left:30px;
+    }
 }

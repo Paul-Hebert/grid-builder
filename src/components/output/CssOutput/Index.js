@@ -81,30 +81,38 @@ class CssOutput extends Component {
       });
     }
 
-    var ruleText = '';
+    var styleSheetText = '';
+    var cssText = '';
 
+    {/* TODO: Convert the cssText section to React JSX instead of HTML string */}
     for(i = 0; i < nodes.length; i++){
       if(nodes[i].type === "code"){
-        ruleText += nodes[i].selector + "{";
+        styleSheetText += nodes[i].selector + "{";
+        cssText += "<div><span class='selector'>" + nodes[i].selector + "</span><span class='bracket'>{</span></div>";
         
         for(var x = 0; x < nodes[i].rules.length; x++){
-            ruleText += nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";";
+            styleSheetText += nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";";
+            cssText += "<div class='declaration'><span class='name'>" + nodes[i].rules[x].name + "</span><span class='colon'>:</span><span class='value'>" + nodes[i].rules[x].value + "</span><span class='semicolon'>;</span></div>";
         }
 
-        ruleText += "}";
+        styleSheetText += "}";
+        cssText += "<div class='bracket'>" + "}" + "</div>";
       } else if(nodes[i].type === "comment"){
         if(nodes[i].style === "single-line"){
-          ruleText += "/*" + nodes[i].rows.value + "*/";
+          styleSheetText += "/*" + nodes[i].rows.value + "*/";
+          cssText += "<div class='comment'>" + "/*" + nodes[i].rows.value + "*/" + "</div>";
         }
       } else{
         console.log("Incorrect node type");
       }
+
+      cssText += "<div>&nbsp;</div>";
     }
 
     return (
       <div>
-        <StyleSheet>{ruleText}</StyleSheet>
-        <CssText preprocessor={this.props.settings.preprocessor}>{ruleText}</CssText>
+        <StyleSheet>{styleSheetText}</StyleSheet>
+        <CssText preprocessor={this.props.settings.preprocessor}>{cssText}</CssText>
       </div>
     )
   }
