@@ -12,6 +12,10 @@ class App extends Component {
       form :{
         preprocessor: "CSS",
         columns: 12,
+        rowMargin: {
+          value:10,
+          unit:"px"
+        },
         gutter: {
           value:10,
           unit:"px"

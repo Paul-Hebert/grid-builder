@@ -64,7 +64,7 @@ class CssOutput extends Component {
           },
           {
             name:"margin-bottom",
-            value:"5px"
+            value: this.props.settings.rowMargin.value + this.props.settings.rowMargin.unit
           }
         ]
       },

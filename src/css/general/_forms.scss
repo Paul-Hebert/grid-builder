@@ -1,9 +1,12 @@
-form{
-    @include block();
+form section{
+    display:block;
+    padding:5px $base-padding;
+    border-bottom:1px solid $third-color;
 }
 
 label{
-    margin:5px 0;
+    padding:5px 0;
+    display:block;
 }
 
 select, textarea, input{
