@@ -4,6 +4,7 @@ import CssText from "./CssText/Index";
 import Declaration from "./CssText/RuleSet/Declaration";
 import RuleSet from "./CssText/RuleSet/Index";
 import SingleLine from "./CssText/Comments/SingleLine";
+import ClosedSingleLine from "./CssText/Comments/ClosedSingleLine";
 import MultiLine from "./CssText/Comments/MultiLine";
 import Fancy from "./CssText/Comments/Fancy";
 import ExtraFancy from "./CssText/Comments/ExtraFancy";
@@ -14,45 +15,29 @@ class CssOutput extends Component {
     var nodes = [
       {
         type: "comment",
-        style:"multi-line",
+        style:"extra-fancy",
         rows:[
           {
-            value: "Multi"
-          },
-          {
-            value: "Line"
-          },
-          {
-            value: "Comment"
+            value: "Custom Grid"
           }
         ]
+      },
+      {
+        type: "space",
+        number: 1
       },
       {
         type: "comment",
         style:"fancy",
         rows:[
           {
-            value: "Fancy Multi Line Comment"
+            value: "Rows"
           }
         ]
       },
       {
-        type: "comment",
-        style:"extra-fancy",
-        rows:[
-          {
-            value: "Extra Fancy Multi Line Comment"
-          }
-        ]
-      },
-      {
-        type: "comment",
-        style:"single-line",
-        rows:[
-          {
-            value: "Single Line Comment"
-          }
-        ]
+        type: "space",
+        number: 1
       },
       {
         type: "code",
@@ -65,6 +50,19 @@ class CssOutput extends Component {
           {
             name:"margin-bottom",
             value: this.props.settings.rowMargin.value + this.props.settings.rowMargin.unit
+          }
+        ]
+      },
+      {
+        type: "space",
+        number: 1
+      },
+      {
+        type: "comment",
+        style:"closed-single-line",
+        rows:[
+          {
+            value: "Clearfix"
           }
         ]
       },
@@ -85,6 +83,23 @@ class CssOutput extends Component {
             value: "both"
           }
         ]
+      },
+      {
+        type: "space",
+        number: 1
+      },
+      {
+        type: "comment",
+        style:"fancy",
+        rows:[
+          {
+            value: "Columns"
+          }
+        ]
+      },
+      {
+        type: "space",
+        number: 1
       },
       {
         type: "code",
@@ -121,6 +136,11 @@ class CssOutput extends Component {
           }
         ]
       });
+
+      nodes.push({
+        type: "space",
+        number: 1
+      });
     }
 
     var styleSheetText = '';
@@ -141,6 +161,8 @@ class CssOutput extends Component {
       } else if(nodes[i].type === "comment"){
         if(nodes[i].style === "single-line"){
           cssText.push(<SingleLine key={i}>{nodes[i].rows[0].value}</SingleLine>);
+        } else if(nodes[i].style === "closed-single-line"){
+          cssText.push(<ClosedSingleLine key={i}>{nodes[i].rows[0].value}</ClosedSingleLine>);
         } else if(nodes[i].style === "multi-line"){
           var commentLines = [];
 
@@ -166,11 +188,13 @@ class CssOutput extends Component {
 
           cssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);
         }
-      } else{
+      } else if(nodes[i].type === "space"){
+        for(x = 0; x < nodes[i].number; x++){
+          cssText.push(<div key={i + "-" + x}>&nbsp;</div>)
+        }
+      }else{
         console.error("Incorrect node type");
       }
-
-      cssText.push(<div key={i + "-break"}>&nbsp;</div>);
     }
 
     return (
