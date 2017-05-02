@@ -19,8 +19,8 @@ class GridOutput extends Component {
     }
 
     return (
-        <section className="grid-output">
-          <header>
+        <section className="grid-output ui-column">
+          <header className="ui-column-header">
             <h2>Grid Output</h2>
           </header>
           <figure>

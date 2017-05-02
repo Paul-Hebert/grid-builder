@@ -21,9 +21,3 @@
         clear: both;
     }
 }
-
-@mixin ui-column(){
-    float:left;
-    height:calc(100vh - #{$header-height} - #{$footer-height});
-    overflow:auto;
-}

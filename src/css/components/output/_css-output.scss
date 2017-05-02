@@ -1,9 +1,8 @@
 .css-output{
     width:25%;
-    @include ui-column();
 
     pre{
-        overflow:auto;
+        @include block();
 
         .comment{
             color: slategray;

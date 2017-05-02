@@ -3,14 +3,34 @@
     line-height:140%;
 }
 
-body{
-    background:#eee;
-}
-
 section{
-    @include block();
-
     header{
         padding: $base-padding 0;
+    }
+}
+
+$ui-header-height: $size-10;
+
+.ui-column{
+    margin-top:$ui-header-height;
+    position:relative;
+    background:$light-grey;
+    float:left;
+    height:calc(100vh - #{$header-height} - #{$footer-height - #{$ui-header-height}});
+    overflow:auto;
+
+    .ui-column-header{
+        @include block;
+        position:fixed;
+        top:$header-height;
+        width:100%;
+        height:$ui-header-height;
+        background:inherit;
+        border-bottom:1px solid $third-color;
+        box-shadow: 0px 3px 5px -5px rgba(0, 0, 0, 0.3);
+
+        h2{
+            font-size:$size-6;
+        }
     }
 }

@@ -40,7 +40,12 @@ class GridForm extends Component {
 
   render() {
     return (
-        <form autoComplete="off" className="grid-form">
+      <section className="grid-form ui-column">
+        <header className="ui-column-header">
+          <h2>Form</h2>
+        </header>
+
+        <form autoComplete="off">
           <section>          
             <header>
               <h3>Columns</h3>
@@ -91,6 +96,7 @@ class GridForm extends Component {
             </label>
           </section>
         </form>
+      </section>
     );
   }
 }

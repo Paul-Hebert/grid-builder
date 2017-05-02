@@ -1,9 +1,10 @@
 .grid-output{
     background:$third-color;
     width:50%;
-    @include ui-column();
     
     figure{
+        @include block();
+
         div[class^='col']{
             background:$secondary-color;
             text-align:center;
