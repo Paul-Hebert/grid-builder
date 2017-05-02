@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
-class Tab extends Component {
-  render() {
+const Tab = (props) => {
     return (
-        <span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-    );
-  }
+      <span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+      </span>
+  );
 }
 
 export default Tab;
