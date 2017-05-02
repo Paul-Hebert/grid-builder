@@ -11,7 +11,7 @@
 }
 
 @mixin rounded(){
-    border-radius:5px;
+    border-radius:$size-3;
 }
 
 @mixin clearfix(){

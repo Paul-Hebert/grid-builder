@@ -1,21 +1,21 @@
 form section{
     display:block;
-    padding:5px $base-padding;
+    padding:$size-2 $base-padding;
     border-bottom:1px solid $third-color;
 }
 
 label{
-    padding:5px 0;
+    padding:$size-2 0;
     display:block;
 }
 
 select, textarea, input{
-    margin:3px 0;
+    margin:$size-1 0;
 }
 
 select, textarea, input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button]){
     border:1px solid #ddd;
-    padding:5px;
+    padding:$size-3;
     display:block;
 }
 
