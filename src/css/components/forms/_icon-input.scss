@@ -3,19 +3,25 @@
 
     .fa{
         position:absolute;
-        left:$size-3;
-        top:$size-3;
+        left:0;
+        top:0;
+        height:$size-8;
+        width:$size-8;
+        background:$third-color;
+        text-align:center;
+        padding-top:$size-2;
     }
 
     input, select, textarea{
         width:100%;
+        height:$size-8;
     }
 
     input, textarea{
-        text-indent:20px;
+        text-indent:$size-8;
     }
 
     select {
-       padding-left: 20px;
+       padding-left: $size-8;
     }
 }

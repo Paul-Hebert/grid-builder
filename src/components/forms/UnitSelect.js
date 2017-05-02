@@ -7,7 +7,7 @@ class UnitSelect extends Component {
   }
   render() {
     return (
-        <Select handler={this.props.handler.bind(this)} names={this.props.names}>
+        <Select handler={this.props.handler.bind(this)} names={this.props.names} className="unit-select">
             <option>px</option>
             <option>%</option>
         </Select>

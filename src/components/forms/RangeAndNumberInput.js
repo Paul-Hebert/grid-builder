@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UnitSelect from './UnitSelect';
 
 class IconInput extends Component {
   constructor(props){
@@ -15,8 +16,17 @@ class IconInput extends Component {
     this.props.handler(this.props.names, e.target.value);
   }
   render() {
+    // TODO: Re-work the logic here. Create component for input with units
+    var optionalUnitSelect = "";
+    var optionalUnitSelectClass = "";
+
+    if(this.props.hasUnitSelect){
+      optionalUnitSelect = <UnitSelect handler={this.props.handler} value={[this.props.names[0],"unit"]}/>
+      optionalUnitSelectClass = "has-unit-select"
+    }
+
     return (
-        <div className="range-and-number-input">
+        <div className={"range-and-number-input " + optionalUnitSelectClass}>
             <input type="number" 
                    value={this.state.value} 
                    min={this.props.min} 
@@ -24,6 +34,7 @@ class IconInput extends Component {
                    step={this.props.step}
                    onChange={this.update.bind(this)}
             />
+            {optionalUnitSelect}
             <input type="range" 
                    value={this.state.value} 
                    min={this.props.min} 

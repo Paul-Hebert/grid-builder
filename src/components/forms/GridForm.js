@@ -54,25 +54,39 @@ class GridForm extends Component {
             <label> 
               Number of Columns
 
-              <IconInput icon="align-right" additionalClasses="fa-rotate-270">
+              <IconInput icon="table">
                 <RangeAndNumberInput min="2" max="18" step="1" default={this.state.columns} handler={this.handler} names={["columns"]}/>
               </IconInput>
             </label>       
             <label>
               Gutter Width
 
-              <IconInput icon="align-right">
-                <RangeAndNumberInput min="0" max="30" step="0.01" default={this.state.gutter.value} handler={this.handler} names={["gutter","value"]}/>
-                <UnitSelect handler={this.handler} value={this.state.gutter.unit} names={["gutter","unit"]}/>
+              <IconInput icon="arrows-h">
+                <RangeAndNumberInput 
+                  min="0" 
+                  max="30" 
+                  step="0.01" 
+                  default={this.state.gutter.value} 
+                  handler={this.handler} 
+                  names={["gutter","value"]}
+                  hasUnitSelect="true"
+                />
               </IconInput>
             </label>  
 
             <label>
               Row's Bottom margin
 
-              <IconInput icon="align-right">
-                <RangeAndNumberInput min="0" max="30" step="0.01" default={this.state.rowMargin.value} handler={this.handler} names={["rowMargin","value"]}/>
-                <UnitSelect handler={this.handler} value={this.state.rowMargin.unit} names={["rowMargin","unit"]}/>
+              <IconInput icon="arrows-v">
+                <RangeAndNumberInput 
+                  min="0" 
+                  max="30" 
+                  step="0.01" 
+                  default={this.state.rowMargin.value} 
+                  handler={this.handler} 
+                  names={["rowMargin","value"]}
+                  hasUnitSelect="true"
+                />
               </IconInput>
             </label>
           </section>

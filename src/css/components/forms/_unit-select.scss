@@ -1,0 +1,14 @@
+.has-unit-select{
+    input[type=number]{
+        width:calc(100% - 70px);
+        float:left;
+        margin-top:0;
+    }
+
+    .unit-select{
+        width:70px;
+        float:left;
+        margin-top:0;
+        padding-left:$size-3;
+    }
+}
