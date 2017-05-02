@@ -6,7 +6,7 @@ class GridOutput extends Component {
   render() {
     var rows = []
 
-    for (var x = 1; x < this.props.columns; x++){
+    for (var x = 1; x <= this.props.columns; x++){
       var columns = [];
 
       columns.push(<ColumnOutput width={x} key={0}/>)

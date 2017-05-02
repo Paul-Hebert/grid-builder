@@ -4,13 +4,13 @@
     @include ui-column();
     
     figure{
-
         div[class^='col']{
             background:$secondary-color;
             text-align:center;
-            border-color:$third-color;
-            border-width:0 1px;
-            border-style:solid;
+
+            &:not(:last-of-type){
+                border-right:1px solid $third-color;
+            }
 
             .column-content{
                 @include dark-block();

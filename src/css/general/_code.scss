@@ -2,8 +2,3 @@ code{
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size:13px;
 }
-
-pre{
-    @include block();
-    background:$third-color;
-}
