@@ -19,6 +19,8 @@
 
             .column-content{
                 @include dark-block();
+                padding-left:0;
+                padding-right:0;
             }
         }
     }
