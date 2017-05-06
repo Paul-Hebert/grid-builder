@@ -24,4 +24,17 @@
     select {
        padding-left: $size-8;
     }
+
+    &.combo{
+        input, select, textarea{
+            width:50%;
+            float:left;
+            margin-top:0;
+
+            &:last-child{
+                padding-left:0;
+                text-indent:0;
+            }
+        }
+    }
 }

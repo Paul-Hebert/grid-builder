@@ -8,7 +8,7 @@ import ClosedSingleLine from "./CssText/Comments/ClosedSingleLine";
 import MultiLine from "./CssText/Comments/MultiLine";
 import Fancy from "./CssText/Comments/Fancy";
 import ExtraFancy from "./CssText/Comments/ExtraFancy";
-import Tab from "./CssText/Tab";
+import Indent from "./CssText/Indent";
 
 class CssOutput extends Component {
   render() {
@@ -154,7 +154,7 @@ class CssOutput extends Component {
             styleSheetText += nodes[i].selector + "{" +
             nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";}";
 
-            declarations.push(<Declaration name={nodes[i].rules[x].name} value={nodes[i].rules[x].value} key={x}/>)
+            declarations.push(<Declaration name={nodes[i].rules[x].name} value={nodes[i].rules[x].value} indent={this.props.settings.indent} key={x}/>)
         }
 
         cssText.push(<RuleSet selector={nodes[i].selector} key={i}>{declarations}</RuleSet>);
@@ -167,7 +167,7 @@ class CssOutput extends Component {
           var commentLines = [];
 
           for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}><Tab/>{nodes[i].rows[x].value}</div>);
+            commentLines.push(<div className='comment-line' key={x}><Indent number={this.props.settings.indent.number} type={this.props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
           }
 
           cssText.push(<MultiLine key={i}>{commentLines}</MultiLine>);
@@ -175,7 +175,7 @@ class CssOutput extends Component {
           commentLines = [];
 
           for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}><Tab/>{nodes[i].rows[x].value}</div>);
+            commentLines.push(<div className='comment-line' key={x}><Indent number={this.props.settings.indent.number} type={this.props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
           }
 
           cssText.push(<Fancy key={i}>{commentLines}</Fancy>);
@@ -183,7 +183,7 @@ class CssOutput extends Component {
           commentLines = [];
 
           for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}><Tab/>{nodes[i].rows[x].value}</div>);
+            commentLines.push(<div className='comment-line' key={x}><Indent number={this.props.settings.indent.number} type={this.props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
           }
 
           cssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);

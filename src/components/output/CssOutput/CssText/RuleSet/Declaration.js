@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Tab from '../Tab';
+import Indent from '../Indent';
 
 class Declaration extends Component {
   render() {
     return (
         <div className="declaration">
-            <Tab/>
+            <Indent number={this.props.indent.number} type={this.props.indent.type}/>
             <span className="name">{this.props.name}</span>
             <span className="colon">:</span>
             &nbsp;
