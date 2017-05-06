@@ -1,0 +1,32 @@
+.tooltip{
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+
+    .tooltip-content{
+        position:absolute;
+        top:calc(100% + 12px);
+        right:50%;
+        @include dark-block();        
+        display:none;
+
+        &:before{
+            content:"";
+            width:0;
+            height:0;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent; 
+            border-right:20px solid $primary-color; 
+
+            position:absolute;
+            right:0;
+            top:-10px;
+        }
+    }
+
+    &:hover .tooltip-content{
+        display:block;
+    }
+}
