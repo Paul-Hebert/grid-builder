@@ -1,0 +1,15 @@
+.actions{
+    float:right;
+
+    .fa{
+        width:$size-7;
+        height:$size-7;
+        border-radius:50%;
+        background:$primary-color;
+        color:$white;
+        text-align:center;
+        margin-left:$size-2;
+        padding-top:$size-1;
+        cursor:pointer;
+    }
+}

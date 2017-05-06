@@ -23,7 +23,6 @@ $ui-header-height: $size-10;
         @include block;
         position:fixed;
         top:$header-height;
-        width:100%;
         height:$ui-header-height;
         background:inherit;
         box-shadow: 0px 3px 5px -5px rgba(0, 0, 0, 0.3);

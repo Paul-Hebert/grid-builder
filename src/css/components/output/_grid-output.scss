@@ -2,6 +2,10 @@
     background:$third-color;
     width:50%;
     
+    .ui-column-header{
+        width:50%;
+    }
+
     figure{
         @include block();
 

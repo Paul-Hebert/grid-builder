@@ -3,12 +3,10 @@
 ---
 
 ## Styles
-* Number of columns
-* Optional max-width
-* Gutter width
-    * Optional Outer Gutter
-* Units
-* Row margins
+-   * Number of columns
+-   * Gutter width
+* Optional Outer Gutter
+-   * Row margins
 
 ### Breakpoints
 * Unlimited number

@@ -9,6 +9,10 @@ class UnitSelect extends Component {
     return (
         <Select handler={this.props.handler.bind(this)} names={this.props.names} className="unit-select">
             <option>px</option>
+            <option>em</option>
+            <option>rem</option>
+            <option>vw</option>
+            <option>vh</option>
             <option>%</option>
         </Select>
     );

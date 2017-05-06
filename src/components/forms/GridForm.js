@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IconInput from './IconInput';
 import Select from './Select';
-import UnitSelect from './UnitSelect';
 import RangeAndNumberInput from './RangeAndNumberInput';
 
 class GridForm extends Component {

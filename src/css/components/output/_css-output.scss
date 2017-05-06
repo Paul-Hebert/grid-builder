@@ -1,6 +1,10 @@
 .css-output{
     width:25%;
 
+    .ui-column-header{
+        width:25%;
+    }
+
     pre{
         @include block();
 
