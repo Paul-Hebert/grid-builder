@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Column from '../grid/Column.js';
 
-class ColumnOutput extends Component {
-  render() {
-    return (
-        <Column width={this.props.width}>
-          <span className="column-content">
-            {this.props.width}
-          </span>
-        </Column>
-    );
-  }
+const ColumnOutput = (props) => {
+  return (
+      <Column width={props.width}>
+        <span className="column-content">
+          {props.width}
+        </span>
+      </Column>
+  );
 }
 
 export default ColumnOutput;

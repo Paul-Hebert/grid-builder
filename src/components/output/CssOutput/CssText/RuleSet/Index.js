@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class RuleSet extends Component {
-  render() {
-    return (
-        <div className="rule-set">
-          <div><span className="selector">{this.props.selector}</span><span className="bracket">{'{'}</span></div>
-            {this.props.children}
-          <div className="bracket">{'}'}</div>
-        </div>
-    );
-  }
+const RuleSet = (props) => {
+  return (
+      <div className="rule-set">
+        <div><span className="selector">{props.selector}</span><span className="bracket">{'{'}</span></div>
+          {props.children}
+        <div className="bracket">{'}'}</div>
+      </div>
+  );
 }
 
 export default RuleSet;
