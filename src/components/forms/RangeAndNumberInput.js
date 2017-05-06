@@ -21,7 +21,7 @@ class IconInput extends Component {
     var optionalUnitSelectClass = "";
 
     if(this.props.hasUnitSelect){
-      optionalUnitSelect = <UnitSelect handler={this.props.handler} names={[this.props.names[0],"unit"]}/>
+      optionalUnitSelect = <UnitSelect handler={this.props.handler} names={[this.props.names[0],"unit"]} value={this.props.unitSelectValue}/>
       optionalUnitSelectClass = "has-unit-select"
     }
 

@@ -17,8 +17,8 @@ class App extends Component {
           unit:"px"
         },
         gutter: {
-          value:10,
-          unit:"px"
+          value:1,
+          unit:"%"
         },
         indent: {
           type:"space",

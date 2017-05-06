@@ -7,13 +7,17 @@ class UnitSelect extends Component {
   }
   render() {
     return (
-        <Select handler={this.props.handler.bind(this)} names={this.props.names} className="unit-select">
-            <option>px</option>
-            <option>em</option>
-            <option>rem</option>
-            <option>vw</option>
-            <option>vh</option>
-            <option>%</option>
+        <Select handler={this.props.handler.bind(this)} 
+                names={this.props.names} 
+                value={this.props.value}
+                className="unit-select" 
+        >
+            <option value="px">px</option>
+            <option value="em">em</option>
+            <option value="rem">rem</option>
+            <option value="vw">vw</option>
+            <option value="vh">vh</option>
+            <option value="%">%</option>
         </Select>
     );
   }

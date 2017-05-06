@@ -6,7 +6,7 @@ class Select extends Component {
   }
   render() {
     return (
-        <select onChange={this.update.bind(this)} className={this.props.className}>
+        <select onChange={this.update.bind(this)} className={this.props.className} value={this.props.value}>
             {this.props.children}
         </select>
     );

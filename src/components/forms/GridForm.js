@@ -74,6 +74,7 @@ class GridForm extends Component {
                   handler={this.handler} 
                   names={["gutter","value"]}
                   hasUnitSelect="true"
+                  unitSelectValue={this.props.settings.gutter.unit}
                 />
               </IconInput>
             </label>  
@@ -90,6 +91,7 @@ class GridForm extends Component {
                   handler={this.handler} 
                   names={["rowMargin","value"]}
                   hasUnitSelect="true"
+                  unitSelectValue={this.props.settings.rowMargin.unit}
                 />
               </IconInput>
             </label>
@@ -104,7 +106,7 @@ class GridForm extends Component {
               Preprocessors
 
               <IconInput icon="code">
-                <Select handler={this.handler} names={["preprocessor"]}>
+                <Select handler={this.handler} names={["preprocessor"]} value={this.props.settings.preprocessor}>
                   <option value="CSS">None</option>
                   <option value="SCSS">SCSS</option>
                   <option value="SASS">SASS</option>
@@ -115,7 +117,7 @@ class GridForm extends Component {
             </label>
 
             <label>
-              Indentation
+              Code Indentation
 
               <IconInput icon="indent" extraClass="combo">
                 <NumberInput type="number" 
@@ -127,7 +129,7 @@ class GridForm extends Component {
                              names={["indent","number"]} 
                 />
 
-                <Select handler={this.handler} names={["indent","type"]}>
+                <Select handler={this.handler} names={["indent","type"]} value={this.props.settings.indent.type}>
                   <option value="space">Spaces</option>
                   <option value="tab">Tabs</option>
                 </Select>
