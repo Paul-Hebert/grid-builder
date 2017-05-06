@@ -27,14 +27,21 @@
 
     &.combo{
         input, select, textarea{
-            width:50%;
             float:left;
             margin-top:0;
+            width:25%;
 
             &:last-child{
-                padding-left:0;
-                text-indent:0;
+                width:75%;
             }
+        }
+        
+        input:last-child{
+            text-indent:$size-3;
+        }
+
+        select:last-child{
+            padding-left:$size-3;
         }
     }
 }
