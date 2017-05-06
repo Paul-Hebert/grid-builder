@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SingleLine extends Component {
-  render() {
-    return (
-        <div className="comment">// {this.props.children}</div>
-    );
-  }
+const SingleLine = (props) => {  
+  return (<div className="comment">// {props.children}</div>);
 }
 
 export default SingleLine;

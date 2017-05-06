@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ClosedSingleLine extends Component {
-  render() {
-    return (
-        <div className="comment">
-            <div>/* {this.props.children} */</div>
-        </div>
-    );
-  }
+const ClosedSingleLine = (props) => {
+  return (
+      <div className="comment">
+          <div>/* {props.children} */</div>
+      </div>
+  );
 }
 
 export default ClosedSingleLine;
