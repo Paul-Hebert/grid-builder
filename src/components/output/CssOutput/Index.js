@@ -64,7 +64,7 @@ class CssOutput extends Component {
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  // Life Cycle Events
+  // componentWillReceiveProps
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   componentWillReceiveProps(props){
@@ -92,6 +92,7 @@ class CssOutput extends Component {
     });
   }
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   buildCssNodes(props){
     var nodes = [
@@ -241,17 +242,31 @@ class CssOutput extends Component {
     return nodes;
   }
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
   processCssNodes(nodes,props){
     var tempCssText = [];
     var tempStyleSheetText = '';
 
-    for(var i = 0; i < nodes.length; i++){
+    var styleSheetIndent = '';
+    for(var i = 0; i < props.settings.indent.number; i++){
+      if(props.settings.indent.type === 'tab'){
+        styleSheetIndent += "\t";
+      } else{
+        styleSheetIndent += " ";
+      }
+    }
+
+    var newLine = "\n";
+
+    for(i = 0; i < nodes.length; i++){
       if(nodes[i].type === "code"){
         var declarations = [];
 
         for(var x = 0; x < nodes[i].rules.length; x++){
-            tempStyleSheetText += nodes[i].selector + "{" +
-            nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";}";
+            tempStyleSheetText += nodes[i].selector + "{" + newLine +
+            styleSheetIndent + nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";" + newLine +
+            "}" + newLine;
 
             declarations.push(<Declaration name={nodes[i].rules[x].name} value={nodes[i].rules[x].value} indent={props.settings.indent} key={x}/>)
         }
@@ -289,7 +304,8 @@ class CssOutput extends Component {
         }
       } else if(nodes[i].type === "space"){
         for(x = 0; x < nodes[i].number; x++){
-          tempCssText.push(<div key={i + "-" + x}>&nbsp;</div>)
+          tempCssText.push(<div key={i + "-" + x}>&nbsp;</div>);
+          tempStyleSheetText += newLine;
         }
       }else{
         console.error("Incorrect node type");
