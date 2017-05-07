@@ -82,6 +82,18 @@ class CssOutput extends Component {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   buildCss(props){
+    var nodes = this.buildCssNodes(props);
+
+    var processedCssNodes = this.processCssNodes(nodes,props);
+
+    return({
+      cssText: processedCssNodes.cssText,
+      styleSheetText: processedCssNodes.styleSheetText
+    });
+  }
+
+
+  buildCssNodes(props){
     var nodes = [
       {
         type: "comment",
@@ -226,10 +238,14 @@ class CssOutput extends Component {
       });
     }
 
+    return nodes;
+  }
+
+  processCssNodes(nodes,props){
     var tempCssText = [];
     var tempStyleSheetText = '';
 
-    for(i = 0; i < nodes.length; i++){
+    for(var i = 0; i < nodes.length; i++){
       if(nodes[i].type === "code"){
         var declarations = [];
 
@@ -285,7 +301,6 @@ class CssOutput extends Component {
       styleSheetText: tempStyleSheetText
     });
   }
-
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // Render
