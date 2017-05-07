@@ -31,6 +31,8 @@
 ---
 
 ## Technical 
+* Minification
+* Include comments
 * Box sizing
     - Border Box
     - Content Box

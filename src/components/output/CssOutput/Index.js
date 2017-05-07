@@ -139,6 +139,15 @@ class CssOutput extends Component {
         number: 1
       },
       {
+        type: "comment",
+        style:"closed-single-line",
+        rows:[
+          {
+            value: "Selects all classes beginning with 'col-'"
+          }
+        ]
+      },
+      {
         type: "code",
         selector: "[class^='col-'], div[class*=' col-']",
         rules: [
@@ -159,6 +168,10 @@ class CssOutput extends Component {
             value: "0 " + this.props.settings.gutter.value + this.props.settings.gutter.unit
           }
         ]
+      },
+      {
+        type: "space",
+        number: 1
       }
     ];
 
