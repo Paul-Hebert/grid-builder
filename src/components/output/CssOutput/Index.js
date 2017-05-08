@@ -4,7 +4,6 @@ import CssText from "./CssText/Index";
 import Declaration from "./CssText/RuleSet/Declaration";
 import RuleSet from "./CssText/RuleSet/Index";
 import SingleLine from "./CssText/Comments/SingleLine";
-import ClosedSingleLine from "./CssText/Comments/ClosedSingleLine";
 import MultiLine from "./CssText/Comments/MultiLine";
 import Fancy from "./CssText/Comments/Fancy";
 import ExtraFancy from "./CssText/Comments/ExtraFancy";
@@ -34,11 +33,12 @@ class CssOutput extends Component {
     // Cross browser client side download. IE 10+
     // http://stackoverflow.com/a/33542499/7816145
     var fileExtension = this.props.settings.preprocessor.toLowerCase();
-    var fileName = "grid." + fileExtension;
+    var fileName = "grid." + (this.props.settings.minify ? "min." : "") + fileExtension;
 
     if(fileExtension !== "css"){
       fileName = "_" + fileName;
     }
+
 
     var blob = new Blob([this.state.styleSheetText], {type: 'text/' + fileExtension});
     if(window.navigator.msSaveOrOpenBlob) {
@@ -142,7 +142,7 @@ class CssOutput extends Component {
       },
       {
         type: "comment",
-        style:"closed-single-line",
+        style:"single-line",
         rows:[
           {
             value: "Clearfix"
@@ -186,7 +186,7 @@ class CssOutput extends Component {
       },
       {
         type: "comment",
-        style:"closed-single-line",
+        style:"single-line",
         rows:[
           {
             value: "Selects all classes beginning with 'col-'"
@@ -259,6 +259,11 @@ class CssOutput extends Component {
 
     var newLine = "\n";
 
+    if(props.settings.minify){
+      newLine = "";
+      styleSheetIndent = "";
+    }
+
     for(i = 0; i < nodes.length; i++){
       if(nodes[i].type === "code"){
         var declarations = [];
@@ -274,15 +279,11 @@ class CssOutput extends Component {
         tempStyleSheetText += "}" + newLine;
 
         tempCssText.push(<RuleSet selector={nodes[i].selector} key={i}>{declarations}</RuleSet>);
-      } else if(nodes[i].type === "comment"){
+      } else if(nodes[i].type === "comment" && props.settings.includeComments){
         if(nodes[i].style === "single-line"){
           tempCssText.push(<SingleLine key={i}>{nodes[i].rows[0].value}</SingleLine>);
 
-          tempStyleSheetText += "// " + nodes[i].rows[0].value + newLine;
-        } else if(nodes[i].style === "closed-single-line"){
-          tempCssText.push(<ClosedSingleLine key={i}>{nodes[i].rows[0].value}</ClosedSingleLine>);
-
-          tempStyleSheetText += "/* " + nodes[i].rows[0].value + " */" + newLine;   
+          tempStyleSheetText += "/* " + nodes[i].rows[0].value + " */" + newLine;
         } else if(nodes[i].style === "multi-line"){
           var commentLines = [];
 
@@ -330,11 +331,9 @@ class CssOutput extends Component {
         }
       } else if(nodes[i].type === "space"){
         for(x = 0; x < nodes[i].number; x++){
-          tempCssText.push(<div key={i + "-" + x}>&nbsp;</div>);
+          tempCssText.push(<div key={i + "-" + x} className="space">&nbsp;</div>);
           tempStyleSheetText += newLine;
         }
-      }else{
-        console.error("Incorrect node type");
       }
     }
 
@@ -353,6 +352,7 @@ class CssOutput extends Component {
       <div>
         <StyleSheet>{this.state.styleSheetText}</StyleSheet>
         <CssText preprocessor={this.props.settings.preprocessor}
+                 minify={this.props.settings.minify}
                  downloadHandler={this.download.bind(this)}
                  shareHandler={this.share.bind(this)}
                  copyHandler={this.copy.bind(this)}

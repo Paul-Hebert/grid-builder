@@ -3,6 +3,7 @@ import IconInput from './IconInput';
 import Select from './Select';
 import RangeAndNumberInput from './RangeAndNumberInput';
 import NumberInput from './NumberInput';
+import Checkbox from './Checkbox';
 
 class GridForm extends Component {
   constructor(props){
@@ -19,7 +20,9 @@ class GridForm extends Component {
         indent: {
           type:props.settings.indent.type,
           number:props.settings.indent.number
-        }
+        },
+        includeComments: props.settings.includeComments,
+        minify: props.settings.minify
     };
 
     this.handler = this.handler.bind(this);
@@ -124,7 +127,7 @@ class GridForm extends Component {
                              min="0" 
                              max="6" 
                              step="1"
-                             value={this.state.indent.number} 
+                             value={this.props.settings.indent.number} 
                              handler={this.handler} 
                              names={["indent","number"]} 
                 />
@@ -134,6 +137,20 @@ class GridForm extends Component {
                   <option value="tab">Tabs</option>
                 </Select>
               </IconInput>
+            </label>
+
+            <label>
+              <Checkbox value={this.props.settings.includeComments}
+                        handler={this.handler}
+                        names={['includeComments']}
+              /> Include Comments
+            </label>
+
+            <label>
+              <Checkbox value={this.props.settings.minify}
+                        handler={this.handler}
+                        names={['minify']}
+              /> Minify Code
             </label>
           </section>
         </form>

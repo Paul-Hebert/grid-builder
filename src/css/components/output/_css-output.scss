@@ -27,5 +27,18 @@
         .value{
             color:#222;
         }
+
+        &.minified{
+            overflow-x:hidden;
+
+            *{
+                display:inline;
+                word-wrap:break-word;
+            }
+
+            .indent, .space{
+                display:none;
+            }
+        }
     }
 }

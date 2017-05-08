@@ -14,7 +14,7 @@ const Indent = (props) => {
       indentation += indentCharacter;
     }
 
-    return (<span>{indentation}</span>);
+    return (<span className="indent">{indentation}</span>);
 }
 
 export default Indent;

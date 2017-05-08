@@ -2,6 +2,12 @@ import React from 'react';
 import Actions from './Actions';
 
 const CssText = (props) => {
+  var minifyClass = "";
+
+  if(props.minify){
+    minifyClass = "minified";
+  }
+
   return (
       <section className="css-output ui-column">
         <header className="ui-column-header">
@@ -12,7 +18,7 @@ const CssText = (props) => {
           />
           <h2>{props.preprocessor} Output</h2>
         </header>
-        <pre>
+        <pre className={minifyClass}>
           <code>{props.children}</code>
         </pre>
       </section>

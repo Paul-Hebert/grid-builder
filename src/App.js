@@ -23,7 +23,9 @@ class App extends Component {
         indent: {
           type:"space",
           number:4
-        }
+        },
+        includeComments: true,
+        minify: false
       }
     }
   }
