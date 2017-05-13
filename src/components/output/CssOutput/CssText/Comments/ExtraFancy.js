@@ -3,11 +3,11 @@ import React from 'react';
 const ExtraFancy = (props) => {
   return (
       <div className="comment">
-          <div>/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div> 
-          <div>/*----------------------------------------------</div> 
+          <div>/*<span className="unminified-comment">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></div> 
+          <div className="unminified-comment">/*----------------------------------------------</div> 
           <div>{props.children}</div>
-          <div>/*----------------------------------------------</div> 
-          <div>/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div>
+          <div className="unminified-comment">/*----------------------------------------------</div> 
+          <div><span className="unminified-comment">/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>*/</div>
       </div>
   );
 }
