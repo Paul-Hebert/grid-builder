@@ -7,7 +7,7 @@ const CssText = (props) => {
   if(props.minify){
     cssText = <div className="css-text minified"><code>{props.children}</code></div>;
   } else{
-    cssText = <pre className="css-text"><code>{props.children}</code></pre>;
+    cssText = <pre className="css-text unminified"><code>{props.children}</code></pre>;
   }
 
   return (

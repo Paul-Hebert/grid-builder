@@ -3,9 +3,13 @@ import React from 'react';
 const MultiLine = (props) => {
   return (
       <div className="comment">
+        <wbr/>
         <div>/*</div>
-          {props.children}
+        <wbr/>
+        {props.children}
+        <wbr/>
         <div>*/</div>
+        <wbr/>
       </div>
   );
 }
