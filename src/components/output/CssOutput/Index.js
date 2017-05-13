@@ -9,6 +9,8 @@ import Fancy from "./CssText/Comments/Fancy";
 import ExtraFancy from "./CssText/Comments/ExtraFancy";
 import Indent from "./CssText/Indent";
 
+const queryString = require('query-string');
+
 class CssOutput extends Component {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // Constructor
@@ -55,7 +57,33 @@ class CssOutput extends Component {
   }
 
   share(){
-    console.log("share");
+    console.log("?" + queryString.stringify(this.flattenObject(this.props.settings)));
+  }
+
+  flattenObject(oldObject){
+    var newObject = {};
+
+    for(var property in oldObject){
+      if (typeof oldObject[property] === "object") {
+          for(var nestedProperty in oldObject[property]){
+            newObject[property + "_" + nestedProperty] = this.encodePercent(oldObject[property][nestedProperty]);
+          }
+      } else{
+        newObject[property] = this.encodePercent(oldObject[property]);
+      }
+    }
+
+    console.log(newObject);
+
+    return newObject;
+  }
+
+  encodePercent(value){
+    if(value === "%"){
+      return "percent"
+    } else{
+      return value;
+    }
   }
 
   copy(){

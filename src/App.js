@@ -8,41 +8,40 @@ const queryString = require('query-string');
 
 var queryState = queryString.parse(location.search);
 
-
-function queryOrDefault(name, defaultValue){
-  if(typeof queryState[name] === "undefined"){
-    return defaultValue;
-  } else{
-    if(queryState[name] === "percent"){
-      return "%";
+class App extends Component {
+  queryOrDefault(name, defaultValue){
+    if(typeof queryState[name] === "undefined"){
+      return defaultValue;
     } else{
-      return queryState[name];
+      if(queryState[name] === "percent"){
+        return "%";
+      } else{
+        return queryState[name];
+      }
     }
   }
-}
 
-class App extends Component {
   constructor(){
     super();
 
     this.state = {
       form :{
-        preprocessor: queryOrDefault("preprocessor","CSS"),
-        columns: queryOrDefault("columns",12),
+        preprocessor: this.queryOrDefault("preprocessor","CSS"),
+        columns: this.queryOrDefault("columns",12),
         rowMargin: {
-          value:queryOrDefault("rowMargin.value",10),
-          unit:queryOrDefault("rowMargin.unit","px")
+          value: this.queryOrDefault("rowMargin_value",10),
+          unit: this.queryOrDefault("rowMargin_unit","px")
         },
         gutter: {
-          value:queryOrDefault("gutter.value",1),
-          unit:queryOrDefault("gutter.unit","%")
+          value: this.queryOrDefault("gutter_value",1),
+          unit: this.queryOrDefault("gutter_unit","%")
         },
         indent: {
-          type:queryOrDefault("indent.type","space"),
-          number:queryOrDefault("indent.number",4)
+          type: this.queryOrDefault("indent_type","space"),
+          number: this.queryOrDefault("indent_number",4)
         },
-        includeComments: queryOrDefault("includeComments",true),
-        minify: queryOrDefault("minify",false)
+        includeComments: this.queryOrDefault("includeComments",true),
+        minify: this.queryOrDefault("minify",false)
       }
     }
   }
