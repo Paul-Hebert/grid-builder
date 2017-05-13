@@ -311,7 +311,11 @@ class CssOutput extends Component {
         if(nodes[i].style === "single-line"){
           tempCssText.push(<SingleLine key={i}>{nodes[i].rows[0].value}</SingleLine>);
 
-          tempStyleSheetText += "/* " + nodes[i].rows[0].value + " */" + newLine;
+          if(props.settings.minify){
+            tempStyleSheetText += "/*" + nodes[i].rows[0].value + "*/" + newLine;
+          } else{
+            tempStyleSheetText += "/* " + nodes[i].rows[0].value + " */" + newLine;
+          }
         } else if(nodes[i].style === "multi-line"){
           var commentLines = [];
 
@@ -323,13 +327,17 @@ class CssOutput extends Component {
             tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;  
           }
 
-          tempStyleSheetText += "/*" + newLine;  
+          tempStyleSheetText += "*/" + newLine;  
 
           tempCssText.push(<MultiLine key={i}>{commentLines}</MultiLine>);
         } else if(nodes[i].style === "fancy"){
           commentLines = [];
 
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          if(props.settings.minify){
+            tempStyleSheetText += "/*";
+          } else{
+            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          }
 
           for(x = 0; x < nodes[i].rows.length; x++){
             commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
@@ -337,22 +345,34 @@ class CssOutput extends Component {
             tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;
           }
 
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine;
+          if(props.settings.minify){
+            tempStyleSheetText += "*/";
+          } else{
+            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine;
+          }
 
           tempCssText.push(<Fancy key={i}>{commentLines}</Fancy>);
         } else if(nodes[i].style === "extra-fancy"){
           commentLines = [];
 
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
-          tempStyleSheetText += "/*----------------------------------------------" + newLine;
+          if(props.settings.minify){
+            tempStyleSheetText += "/*";
+          } else{
+            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+            tempStyleSheetText += "/*----------------------------------------------" + newLine;
+          }
 
           for(x = 0; x < nodes[i].rows.length; x++){
             commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
             tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;
           }
 
-          tempStyleSheetText += "/*----------------------------------------------" + newLine;
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          if(props.settings.minify){
+            tempStyleSheetText += "*/" + newLine;
+          } else{
+            tempStyleSheetText += "/*----------------------------------------------" + newLine;
+            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine;
+          }
 
 
           tempCssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);
