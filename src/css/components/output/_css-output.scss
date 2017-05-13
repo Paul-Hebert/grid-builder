@@ -5,7 +5,7 @@
         width:25%;
     }
 
-    pre{
+    .css-text{
         @include block();
 
         .comment{
@@ -26,19 +26,19 @@
 
         .value{
             color:#222;
-        }
-
-        &.minified{
-            overflow-x:hidden;
-
-            *{
-                display:inline;
-                word-wrap:break-word;
-            }
-
-            .indent, .space, .unminified-comment{
-                display:none;
-            }
-        }
+        }        
     }
+
+    .minified{
+        overflow-x:hidden;
+
+        *{
+            display:inline;
+            word-wrap:break-word;
+        }
+
+        .indent, .space, .unminified-comment{
+            display:none;
+        }
+    }    
 }

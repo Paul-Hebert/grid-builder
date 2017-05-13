@@ -2,10 +2,12 @@ import React from 'react';
 import Actions from './Actions';
 
 const CssText = (props) => {
-  var minifyClass = "";
+  var cssText;
 
   if(props.minify){
-    minifyClass = "minified";
+    cssText = <div className="css-text minified"><code>{props.children}</code></div>;
+  } else{
+    cssText = <pre className="css-text"><code>{props.children}</code></pre>;
   }
 
   return (
@@ -18,9 +20,7 @@ const CssText = (props) => {
           />
           <h2>{props.preprocessor} Output</h2>
         </header>
-        <pre className={minifyClass}>
-          <code>{props.children}</code>
-        </pre>
+        {cssText}
       </section>
   );
 }
