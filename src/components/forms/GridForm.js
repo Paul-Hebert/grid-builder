@@ -118,9 +118,14 @@ class GridForm extends Component {
                 </Select>
               </IconInput>
             </label>
+          </section>
 
+          <section>
+            <header>
+              <h3>Code Formatting</h3>
+            </header>
             <label>
-              Code Indentation
+              Indentation
 
               <IconInput icon="indent" extraClass="combo">
                 <NumberInput type="number" 
