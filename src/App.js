@@ -15,7 +15,11 @@ class App extends Component {
     } else{
       if(queryState[name] === "percent"){
         return "%";
-      } else{
+      } else if(queryState[name] === "true"){   
+        return true;   
+      } else if(queryState[name] === "false"){
+        return false;
+      }else{
         return queryState[name];
       }
     }
