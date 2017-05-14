@@ -16,7 +16,7 @@ $ui-header-height: $size-10;
     position:relative;
     background:$light-grey;
     float:left;
-    height:calc(100vh - #{$header-height} - #{$footer-height - #{$ui-header-height}});
+    height:calc(100vh - #{$header-height} - #{$ui-header-height});
     overflow:auto;
 
     .ui-column-header{

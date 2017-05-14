@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from './components/layout/Header.js';
-import Footer from './components/layout/Footer.js';
 import GridForm from './components/forms/GridForm.js';
 import Output from './components/output/Output.js';
 
@@ -63,7 +62,6 @@ class App extends Component {
         <Header />
         <GridForm settings={this.state.form} formHandler={this.formHandler.bind(this)}/>
         <Output settings={this.state.form}/>
-        <Footer />
       </div>
     );
   }
