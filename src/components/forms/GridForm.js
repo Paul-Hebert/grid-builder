@@ -12,7 +12,11 @@ class GridForm extends Component {
     this.state ={
         preprocessor: props.settings.preprocessor,
         columns: props.settings.columns,
-        rowMargin: props.settings.rowMargin,
+        boxSizing: props.settings.boxSizing,
+        rowMargin: {
+          value: props.settings.rowMargin.value,
+          unit: props.settings.rowMargin.unit,
+        },
         gutter: {
           value: props.settings.gutter.value,
           unit: props.settings.gutter.unit
@@ -115,6 +119,17 @@ class GridForm extends Component {
                   <option value="SASS">SASS</option>
                   <option value="LESS">LESS</option>
                   <option value="Stylus">Stylus</option>
+                </Select>
+              </IconInput>
+            </label>
+
+            <label>
+              Box Sizing
+
+              <IconInput icon="object-group">
+                <Select handler={this.handler} names={["boxSizing"]} value={this.props.settings.boxSizing}>
+                  <option value="border-box">Border Box</option>
+                  <option value="content-box">Content Box</option>
                 </Select>
               </IconInput>
             </label>

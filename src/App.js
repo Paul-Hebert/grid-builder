@@ -32,6 +32,7 @@ class App extends Component {
       form :{
         preprocessor: this.queryOrDefault("preprocessor","CSS"),
         columns: this.queryOrDefault("columns",12),
+        boxSizing: this.queryOrDefault("boxSizing","border-box"),
         rowMargin: {
           value: this.queryOrDefault("rowMargin_value",10),
           unit: this.queryOrDefault("rowMargin_unit","px")
