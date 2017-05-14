@@ -224,10 +224,6 @@ class CssOutput extends Component {
         selector: "[class^='col-'], div[class*=' col-']",
         rules: [
           {
-            name: "width",
-            value: (100/props.settings.columns) + "%"
-          },
-          {
             name: "float",
             value: "left"
           },
