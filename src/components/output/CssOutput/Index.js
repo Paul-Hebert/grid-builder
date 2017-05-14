@@ -139,8 +139,30 @@ class CssOutput extends Component {
             value: "Rows"
           }
         ]
-      },
-      {
+      }
+    ];
+
+    if(props.settings.strategy === "inline-block"){
+      nodes.push({
+        type: "rule-set",
+        selector: ".row",
+        rules: [
+          {
+            name:"font-size",
+            value: 0
+          },
+          {
+            name:"width",
+            value: "100%"
+          },
+          {
+            name:"margin-bottom",
+            value: props.settings.rowMargin.value + props.settings.rowMargin.unit
+          }
+        ]
+      });
+    } else{
+      nodes.push({
         type: "rule-set",
         selector: ".row",
         rules: [
@@ -153,53 +175,57 @@ class CssOutput extends Component {
             value: props.settings.rowMargin.value + props.settings.rowMargin.unit
           }
         ]
-      },
-      {
-        type: "comment",
-        style:"single-line",
-        rows:[
-          {
-            value: "Clearfix"
-          }
-        ]
-      },
-      {
-        type: "rule-set",
-        selector: ".row::after",
-        rules: [
-          {
-            name: "content",
-            value: "''"
-          },
-          {
-            name: "display",
-            value: "table"
-          },
-          {
-            name: "clear",
-            value: "both"
-          }
-        ]
-      },
-      {
-        type: "comment",
-        style:"fancy",
-        rows:[
-          {
-            value: "Columns"
-          }
-        ]
-      },
-      {
-        type: "comment",
-        style:"single-line",
-        rows:[
-          {
-            value: "Selects all classes beginning with 'col-'"
-          }
-        ]
-      },
-      {
+      });
+    }
+
+    nodes.push({
+      type: "comment",
+      style:"single-line",
+      rows:[
+        {
+          value: "Clearfix"
+        }
+      ]
+    },
+    {
+      type: "rule-set",
+      selector: ".row::after",
+      rules: [
+        {
+          name: "content",
+          value: "''"
+        },
+        {
+          name: "display",
+          value: "table"
+        },
+        {
+          name: "clear",
+          value: "both"
+        }
+      ]
+    },
+    {
+      type: "comment",
+      style:"fancy",
+      rows:[
+        {
+          value: "Columns"
+        }
+      ]
+    },
+    {
+      type: "comment",
+      style:"single-line",
+      rows:[
+        {
+          value: "Selects all classes beginning with 'col-'"
+        }
+      ]
+    });
+
+    if(props.settings.strategy === "floats"){
+      nodes.push({
         type: "rule-set",
         selector: "[class^='col-'], div[class*=' col-']",
         rules: [
@@ -216,8 +242,31 @@ class CssOutput extends Component {
             value: "0 " + props.settings.gutter.value + props.settings.gutter.unit
           }
         ]
-      },
-    ];
+      });
+    } else if(props.settings.strategy === "inline-block"){
+      nodes.push({
+        type: "rule-set",
+        selector: "[class^='col-'], div[class*=' col-']",
+        rules: [
+          {
+            name: "display",
+            value: "inline-block"
+          },
+          {
+            name: "font-size",
+            value: "1rem"
+          },
+          {
+            name: "box-sizing",
+            value: props.settings.boxSizing
+          },
+          {
+            name: "padding",
+            value: "0 " + props.settings.gutter.value + props.settings.gutter.unit
+          }
+        ]
+      });
+    }
 
     for(var i = 1; i <= props.settings.columns; i++){
       var width = (100 / props.settings.columns * i) + "%";

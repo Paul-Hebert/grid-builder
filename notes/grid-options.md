@@ -31,11 +31,11 @@
 ---
 
 ## Technical 
-* Minification
-* Include comments
-* Box sizing
-    - Border Box
-    - Content Box
+-   * Minification
+-   * Include comments
+-   * Box sizing
+-   - Border Box
+-   - Content Box
 * Semantic mix-ins
     - Only available when using a preprocessor
 * Strategies

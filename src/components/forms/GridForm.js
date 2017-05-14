@@ -100,6 +100,19 @@ class GridForm extends Component {
             </label>
 
             <label>
+              Strategy
+
+              <IconInput icon="lightbulb-o">
+                <Select handler={this.handler} names={["strategy"]} value={this.props.settings.strategy}>
+                  <option value="floats">Floated</option>
+                  <option value="inline-block">Inline Block</option>
+                  <option value="flexbox">Flexbox</option>
+                  <option value="css-grid">CSS Grid</option>
+                </Select>
+              </IconInput>
+            </label>
+
+            <label>
               Box Sizing
 
               <IconInput icon="object-group">
