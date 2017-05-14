@@ -423,6 +423,7 @@ class CssOutput extends Component {
                  downloadHandler={this.download.bind(this)}
                  shareHandler={this.share.bind(this)}
                  copyHandler={this.copy.bind(this)}
+                 styleSheetText={this.state.styleSheetText}
         >
           {this.state.cssText}
         </CssText>

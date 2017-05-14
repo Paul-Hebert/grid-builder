@@ -6,7 +6,7 @@
 }
 
 @mixin block(){
-    padding:$base-padding;
+    padding:$base-padding $size-6;
     display:block;
 }
 
