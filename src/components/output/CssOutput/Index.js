@@ -57,7 +57,7 @@ class CssOutput extends Component {
   }
 
   share(){
-    console.log("?" + queryString.stringify(this.flattenObject(this.props.settings)));
+    console.log(window.location.origin + "/?" + queryString.stringify(this.flattenObject(this.props.settings)));
   }
 
   flattenObject(oldObject){
@@ -72,8 +72,6 @@ class CssOutput extends Component {
         newObject[property] = this.encodePercent(oldObject[property]);
       }
     }
-
-    console.log(newObject);
 
     return newObject;
   }
