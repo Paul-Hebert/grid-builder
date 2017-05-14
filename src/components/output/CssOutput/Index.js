@@ -132,10 +132,6 @@ class CssOutput extends Component {
         ]
       },
       {
-        type: "space",
-        number: 1
-      },
-      {
         type: "comment",
         style:"fancy",
         rows:[
@@ -143,10 +139,6 @@ class CssOutput extends Component {
             value: "Rows"
           }
         ]
-      },
-      {
-        type: "space",
-        number: 1
       },
       {
         type: "code",
@@ -161,10 +153,6 @@ class CssOutput extends Component {
             value: props.settings.rowMargin.value + props.settings.rowMargin.unit
           }
         ]
-      },
-      {
-        type: "space",
-        number: 1
       },
       {
         type: "comment",
@@ -194,10 +182,6 @@ class CssOutput extends Component {
         ]
       },
       {
-        type: "space",
-        number: 1
-      },
-      {
         type: "comment",
         style:"fancy",
         rows:[
@@ -205,10 +189,6 @@ class CssOutput extends Component {
             value: "Columns"
           }
         ]
-      },
-      {
-        type: "space",
-        number: 1
       },
       {
         type: "comment",
@@ -237,10 +217,6 @@ class CssOutput extends Component {
           }
         ]
       },
-      {
-        type: "space",
-        number: 1
-      }
     ];
 
     for(var i = 1; i <= props.settings.columns; i++){
@@ -253,11 +229,6 @@ class CssOutput extends Component {
             value: (100 / props.settings.columns * i) + "%"
           }
         ]
-      });
-
-      nodes.push({
-        type: "space",
-        number: 1
       });
     }
 
@@ -298,7 +269,7 @@ class CssOutput extends Component {
             declarations.push(<Declaration name={nodes[i].rules[x].name} value={nodes[i].rules[x].value} indent={props.settings.indent} key={x}/>)
         }
 
-        tempStyleSheetText += "}" + newLine;
+        tempStyleSheetText += "}" + newLine + newLine;
 
         tempCssText.push(<RuleSet selector={nodes[i].selector} key={i}>{declarations}</RuleSet>);
       } else if(nodes[i].type === "comment" && props.settings.includeComments){
@@ -321,7 +292,7 @@ class CssOutput extends Component {
             tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;  
           }
 
-          tempStyleSheetText += "*/" + newLine;  
+          tempStyleSheetText += "*/" + newLine + newLine;  
 
           tempCssText.push(<MultiLine key={i}>{commentLines}</MultiLine>);
         } else if(nodes[i].style === "fancy"){
@@ -342,7 +313,7 @@ class CssOutput extends Component {
           if(props.settings.minify){
             tempStyleSheetText += "*/";
           } else{
-            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine;
+            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
           }
 
           tempCssText.push(<Fancy key={i}>{commentLines}</Fancy>);
@@ -365,16 +336,11 @@ class CssOutput extends Component {
             tempStyleSheetText += "*/" + newLine;
           } else{
             tempStyleSheetText += "/*----------------------------------------------" + newLine;
-            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine;
+            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
           }
 
 
           tempCssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);
-        }
-      } else if(nodes[i].type === "space"){
-        for(x = 0; x < nodes[i].number; x++){
-          tempCssText.push(<div key={i + "-" + x} className="space">&nbsp;</div>);
-          tempStyleSheetText += newLine;
         }
       }
     }

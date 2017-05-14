@@ -10,6 +10,7 @@ const Fancy = (props) => {
           <wbr/>
           <div><span className="unminified-comment">/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>*/</div>
           <wbr/>
+          <div className="space">&nbsp;</div>
       </div>
   );
 }

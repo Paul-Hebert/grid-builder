@@ -10,6 +10,7 @@ const MultiLine = (props) => {
         <wbr/>
         <div>*/</div>
         <wbr/>
+        <div className="space">&nbsp;</div>
       </div>
   );
 }

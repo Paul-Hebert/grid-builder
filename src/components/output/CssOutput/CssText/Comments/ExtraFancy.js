@@ -12,6 +12,7 @@ const ExtraFancy = (props) => {
           <div className="unminified-comment">/*----------------------------------------------</div> 
           <div><span className="unminified-comment">/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>*/</div>
           <wbr/>
+          <div className="space">&nbsp;</div>
       </div>
   );
 }

@@ -6,6 +6,7 @@ const RuleSet = (props) => {
         <div><span className="selector">{props.selector}</span><span className="bracket">{'{'}</span></div>
           {props.children}
         <div className="bracket">{'}'}</div>
+        <div className="space">&nbsp;</div>
       </div>
   );
 }
