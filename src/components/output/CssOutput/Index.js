@@ -141,7 +141,7 @@ class CssOutput extends Component {
         ]
       },
       {
-        type: "code",
+        type: "rule-set",
         selector: ".row",
         rules: [
           {
@@ -164,7 +164,7 @@ class CssOutput extends Component {
         ]
       },
       {
-        type: "code",
+        type: "rule-set",
         selector: ".row::after",
         rules: [
           {
@@ -200,7 +200,7 @@ class CssOutput extends Component {
         ]
       },
       {
-        type: "code",
+        type: "rule-set",
         selector: "[class^='col-'], div[class*=' col-']",
         rules: [
           {
@@ -221,7 +221,7 @@ class CssOutput extends Component {
 
     for(var i = 1; i <= props.settings.columns; i++){
       nodes.push({
-        type: "code",
+        type: "rule-set",
         selector: ".col-" + i,
         rules: [
           {
@@ -258,7 +258,7 @@ class CssOutput extends Component {
     }
 
     for(i = 0; i < nodes.length; i++){
-      if(nodes[i].type === "code"){
+      if(nodes[i].type === "rule-set"){
         var declarations = [];
 
         tempStyleSheetText += nodes[i].selector + "{" + newLine
