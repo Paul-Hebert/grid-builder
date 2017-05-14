@@ -152,33 +152,50 @@ class CssOutput extends Component {
             value: 0
           },
           {
-            name:"width",
-            value: "100%"
-          },
-          {
             name:"margin-bottom",
             value: props.settings.rowMargin.value + props.settings.rowMargin.unit
           }
         ]
       });
-    } else{
+    } else if(props.settings.strategy === "flexbox"){
+       nodes.push({
+        type: "rule-set",
+        selector: ".row",
+        rules: [
+          {
+            name:"margin-bottom",
+            value: props.settings.rowMargin.value + props.settings.rowMargin.unit
+          },
+          {
+            name: "display",
+            value: "flex"
+          },
+          {
+            name: "flex",
+            value: "0 1 auto"
+          },
+          {
+            name: "flex-direction",
+            value: "row"
+          },
+          {
+            name: "flex-wrap",
+            value: "wrap"
+          }
+        ]
+      });     
+    } else if(props.settings.strategy === "floats"){
       nodes.push({
         type: "rule-set",
         selector: ".row",
         rules: [
           {
-            name:"width",
-            value: "100%"
-          },
-          {
             name:"margin-bottom",
             value: props.settings.rowMargin.value + props.settings.rowMargin.unit
           }
         ]
-      });
-    }
-
-    nodes.push({
+      },
+      {
       type: "comment",
       style:"single-line",
       rows:[
@@ -204,7 +221,10 @@ class CssOutput extends Component {
           value: "both"
         }
       ]
-    },
+    });
+    }
+
+    nodes.push(
     {
       type: "comment",
       style:"fancy",
@@ -243,6 +263,25 @@ class CssOutput extends Component {
           }
         ]
       });
+    } else if(props.settings.strategy === "flexbox"){
+      nodes.push({
+        type: "rule-set",
+        selector: "[class^='col-'], div[class*=' col-']",
+        rules: [
+          {
+            name: "flex",
+            value: "0 0 auto"
+          },
+          {
+            name: "box-sizing",
+            value: props.settings.boxSizing
+          },
+          {
+            name: "padding",
+            value: "0 " + props.settings.gutter.value + props.settings.gutter.unit
+          }
+        ]
+      });      
     } else if(props.settings.strategy === "inline-block"){
       nodes.push({
         type: "rule-set",
@@ -269,14 +308,19 @@ class CssOutput extends Component {
     }
 
     for(var i = 1; i <= props.settings.columns; i++){
-      var width = (100 / props.settings.columns * i) + "%";
+      var widthName = "width";
+      var widthValue = (100 / props.settings.columns * i) + "%";
       
       if(props.settings.boxSizing === "content-box"){
         if(props.settings.gutter.unit === "%"){
-          width = (100 / props.settings.columns * i) - (props.settings.gutter.value * 2) + "%";
+          widthValue = (100 / props.settings.columns * i) - (props.settings.gutter.value * 2) + "%";
         } else{
-          width = "calc(" + width + " - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
+          widthValue = "calc(" + widthValue + " - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
         }
+      }
+
+      if(props.settings.strategy === "flexbox"){
+        widthName = "flex-basis";
       }
 
       nodes.push({
@@ -284,8 +328,8 @@ class CssOutput extends Component {
         selector: ".col-" + i,
         rules: [
           {
-            name: "width",
-            value: width
+            name: widthName,
+            value: widthValue
           }
         ]
       });
