@@ -13,10 +13,6 @@
             background:$secondary-color;
             text-align:center;
 
-            &:not(:last-of-type){
-                border-right:1px solid $third-color;
-            }
-
             .column-content{
                 @include dark-block();
                 padding-left:0;

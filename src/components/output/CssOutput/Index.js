@@ -209,7 +209,7 @@ class CssOutput extends Component {
           },
           {
             name: "box-sizing",
-            value: "border-box"
+            value: props.settings.boxSizing
           },
           {
             name: "padding",
@@ -220,13 +220,23 @@ class CssOutput extends Component {
     ];
 
     for(var i = 1; i <= props.settings.columns; i++){
+      var width = (100 / props.settings.columns * i) + "%";
+      
+      if(props.settings.boxSizing === "content-box"){
+        if(props.settings.gutter.unit === "%"){
+          width = (100 / props.settings.columns * i) - (props.settings.gutter.value * 2) + "%";
+        } else{
+          width = "calc(" + width + " - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
+        }
+      }
+
       nodes.push({
         type: "rule-set",
         selector: ".col-" + i,
         rules: [
           {
             name: "width",
-            value: (100 / props.settings.columns * i) + "%"
+            value: width
           }
         ]
       });
