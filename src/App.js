@@ -29,6 +29,7 @@ class App extends Component {
 
     this.state = {
       form :{
+        strategy: this.queryOrDefault("strategy","floats"),
         preprocessor: this.queryOrDefault("preprocessor","CSS"),
         columns: this.queryOrDefault("columns",12),
         boxSizing: this.queryOrDefault("boxSizing","border-box"),

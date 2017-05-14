@@ -9,42 +9,18 @@ class GridForm extends Component {
   constructor(props){
     super();
 
-    this.state ={
-        preprocessor: props.settings.preprocessor,
-        columns: props.settings.columns,
-        boxSizing: props.settings.boxSizing,
-        rowMargin: {
-          value: props.settings.rowMargin.value,
-          unit: props.settings.rowMargin.unit,
-        },
-        gutter: {
-          value: props.settings.gutter.value,
-          unit: props.settings.gutter.unit
-        },
-        indent: {
-          type:props.settings.indent.type,
-          number:props.settings.indent.number
-        },
-        includeComments: props.settings.includeComments,
-        minify: props.settings.minify
-    };
-
     this.handler = this.handler.bind(this);
   }
 
   handler(names, value) {
-    var currentState = this.state;
+    var currentState = this.props.settings;
 
     // TODO: Figure out a better way to drill down object properties using arrays and bracket notation
     if(names.length === 1){
       currentState[names[0]] = value;
     } else if(names.length === 2){
       currentState[names[0]][names[1]] = value;
-    } else if(names.length === 3){
-      currentState[names[0]][names[1]][names[2]] = value;
     }
-
-    this.setState(currentState);
 
     this.props.formHandler(currentState);
   }
@@ -66,7 +42,7 @@ class GridForm extends Component {
               Number of Columns
 
               <IconInput icon="table">
-                <RangeAndNumberInput min="2" max="18" step="1" default={this.state.columns} handler={this.handler} names={["columns"]}/>
+                <RangeAndNumberInput min="2" max="18" step="1" default={this.props.settings.columns} handler={this.handler} names={["columns"]}/>
               </IconInput>
             </label>       
             <label>
@@ -77,7 +53,7 @@ class GridForm extends Component {
                   min="0" 
                   max="30" 
                   step="0.01" 
-                  default={this.state.gutter.value} 
+                  default={this.props.settings.gutter.value} 
                   handler={this.handler} 
                   names={["gutter","value"]}
                   hasUnitSelect="true"
@@ -94,7 +70,7 @@ class GridForm extends Component {
                   min="0" 
                   max="30" 
                   step="0.01" 
-                  default={this.state.rowMargin.value} 
+                  default={this.props.settings.rowMargin.value} 
                   handler={this.handler} 
                   names={["rowMargin","value"]}
                   hasUnitSelect="true"
