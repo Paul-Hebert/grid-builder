@@ -222,6 +222,21 @@ class CssOutput extends Component {
         }
       ]
     });
+    } else if(props.settings.strategy === "css-grid"){
+      nodes.push({
+        type: "rule-set",
+        selector: ".row",
+        rules: [
+          {
+            name:"margin-bottom",
+            value: props.settings.rowMargin.value + props.settings.rowMargin.unit
+          },
+          {
+            name:"display",
+            value: "grid"
+          },
+        ]
+      });
     }
 
     nodes.push(
@@ -247,7 +262,7 @@ class CssOutput extends Component {
     if(props.settings.strategy === "floats"){
       nodes.push({
         type: "rule-set",
-        selector: "[class^='col-'], div[class*=' col-']",
+        selector: "[class^='col-'], [class*=' col-']",
         rules: [
           {
             name: "float",
@@ -307,33 +322,40 @@ class CssOutput extends Component {
       });
     }
 
-    for(var i = 1; i <= props.settings.columns; i++){
-      var widthName = "width";
-      var widthValue = (100 / props.settings.columns * i) + "%";
-      
-      if(props.settings.boxSizing === "content-box"){
-        if(props.settings.gutter.unit === "%"){
-          widthValue = (100 / props.settings.columns * i) - (props.settings.gutter.value * 2) + "%";
-        } else{
-          widthValue = "calc(" + widthValue + " - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
-        }
-      }
+    var widthName = "width";
+    var dynamicValue = 100 / props.settings.columns;
+    var dynamicTemplate = "{dynamicValue}%";
+    var dynamicModifier = 0;
 
-      if(props.settings.strategy === "flexbox"){
-        widthName = "flex-basis";
+    if(props.settings.boxSizing === "content-box"){
+      if(props.settings.gutter.unit === "%"){
+        dynamicModifier = (props.settings.gutter.value * -2);
+      } else{
+        dynamicTemplate = "calc({dynamicValue}% - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
       }
+    }
 
-      nodes.push({
+    if(props.settings.strategy === "flexbox"){
+      widthName = "flex-basis";
+    }
+
+    nodes.push({
+      type: "loop",
+      start: 1,
+      end: props.settings.columns,
+      dynamicValue: dynamicValue,
+      dynamicModifier: dynamicModifier,
+      dynamicTemplate: dynamicTemplate,
+      childNode: {
         type: "rule-set",
-        selector: ".col-" + i,
+        selector: ".col-{index}",
         rules: [
           {
             name: widthName,
-            value: widthValue
           }
         ]
-      });
-    }
+      }
+    });
 
     return nodes;
   }
@@ -361,97 +383,166 @@ class CssOutput extends Component {
     }
 
     for(i = 0; i < nodes.length; i++){
-      if(nodes[i].type === "rule-set"){
-        var declarations = [];
-
-        tempStyleSheetText += nodes[i].selector + "{" + newLine
-
-        for(var x = 0; x < nodes[i].rules.length; x++){
-            tempStyleSheetText += styleSheetIndent + nodes[i].rules[x].name + ":" + nodes[i].rules[x].value + ";" + newLine;
-
-            declarations.push(<Declaration name={nodes[i].rules[x].name} value={nodes[i].rules[x].value} indent={props.settings.indent} key={x}/>)
-        }
-
-        tempStyleSheetText += "}" + newLine + newLine;
-
-        tempCssText.push(<RuleSet selector={nodes[i].selector} key={i}>{declarations}</RuleSet>);
-      } else if(nodes[i].type === "comment" && props.settings.includeComments){
-        if(nodes[i].style === "single-line"){
-          tempCssText.push(<SingleLine key={i}>{nodes[i].rows[0].value}</SingleLine>);
-
-          if(props.settings.minify){
-            tempStyleSheetText += "/*" + nodes[i].rows[0].value + "*/" + newLine;
-          } else{
-            tempStyleSheetText += "/* " + nodes[i].rows[0].value + " */" + newLine;
-          }
-        } else if(nodes[i].style === "multi-line"){
-          var commentLines = [];
-
-          tempStyleSheetText += "/*" + newLine;  
-
-          for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
-
-            tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;  
-          }
-
-          tempStyleSheetText += "*/" + newLine + newLine;  
-
-          tempCssText.push(<MultiLine key={i}>{commentLines}</MultiLine>);
-        } else if(nodes[i].style === "fancy"){
-          commentLines = [];
-
-          if(props.settings.minify){
-            tempStyleSheetText += "/*";
-          } else{
-            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
-          }
-
-          for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
-          
-            tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;
-          }
-
-          if(props.settings.minify){
-            tempStyleSheetText += "*/";
-          } else{
-            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
-          }
-
-          tempCssText.push(<Fancy key={i}>{commentLines}</Fancy>);
-        } else if(nodes[i].style === "extra-fancy"){
-          commentLines = [];
-
-          if(props.settings.minify){
-            tempStyleSheetText += "/*";
-          } else{
-            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
-            tempStyleSheetText += "/*----------------------------------------------" + newLine;
-          }
-
-          for(x = 0; x < nodes[i].rows.length; x++){
-            commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{nodes[i].rows[x].value}</div>);
-            tempStyleSheetText += styleSheetIndent + nodes[i].rows[x].value + newLine;
-          }
-
-          if(props.settings.minify){
-            tempStyleSheetText += "*/" + newLine;
-          } else{
-            tempStyleSheetText += "/*----------------------------------------------" + newLine;
-            tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
-          }
-
-
-          tempCssText.push(<ExtraFancy key={i}>{commentLines}</ExtraFancy>);
-        }
-      }
+      tempStyleSheetText += this.processNodeForStyleSheet(nodes[i], newLine, styleSheetIndent, props, i);
+      tempCssText.push(this.processNodeForCssText(nodes[i], props, i));
     }
 
     return({
       cssText: tempCssText,
       styleSheetText: tempStyleSheetText
     });
+  }
+
+  processNodeForStyleSheet(node, newLine, styleSheetIndent, props, index){
+    var tempStyleSheetText = "";
+    if(node.type === "rule-set"){
+      tempStyleSheetText += node.selector + "{" + newLine
+
+      for(var x = 0; x < node.rules.length; x++){
+          tempStyleSheetText += styleSheetIndent + node.rules[x].name + ":" + node.rules[x].value + ";" + newLine;
+      }
+
+      tempStyleSheetText += "}" + newLine + newLine;
+    } else if(node.type === "comment" && props.settings.includeComments){
+      if(node.style === "single-line"){
+        if(props.settings.minify){
+          tempStyleSheetText += "/*" + node.rows[0].value + "*/" + newLine;
+        } else{
+          tempStyleSheetText += "/* " + node.rows[0].value + " */" + newLine;
+        }
+      } else if(node.style === "multi-line"){
+        tempStyleSheetText += "/*" + newLine;  
+
+        for(x = 0; x < node.rows.length; x++){
+          tempStyleSheetText += styleSheetIndent + node.rows[x].value + newLine;  
+        }
+
+        tempStyleSheetText += "*/" + newLine + newLine;  
+      } else if(node.style === "fancy"){
+        if(props.settings.minify){
+          tempStyleSheetText += "/*";
+        } else{
+          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+        }
+
+        for(x = 0; x < node.rows.length; x++){        
+          tempStyleSheetText += styleSheetIndent + node.rows[x].value + newLine;
+        }
+
+        if(props.settings.minify){
+          tempStyleSheetText += "*/";
+        } else{
+          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
+        }
+      } else if(node.style === "extra-fancy"){
+        if(props.settings.minify){
+          tempStyleSheetText += "/*";
+        } else{
+          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          tempStyleSheetText += "/*----------------------------------------------" + newLine;
+        }
+
+        for(x = 0; x < node.rows.length; x++){
+          tempStyleSheetText += styleSheetIndent + node.rows[x].value + newLine;
+        }
+
+        if(props.settings.minify){
+          tempStyleSheetText += "*/" + newLine;
+        } else{
+          tempStyleSheetText += "/*----------------------------------------------" + newLine;
+          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
+        }
+      }
+    } else if(node.type === "loop"){
+      for(var z = node.start; z <= node.end; z++){
+        var childNode = this.copyObject(node.childNode);
+
+        var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
+
+        childNode.selector = node.childNode.selector.replace("{index}", z)
+
+        childNode.rules = [];
+
+        for(var y = 0; y < node.childNode.rules.length; y++){
+          childNode.rules.push({
+            name: node.childNode.rules[y].name,
+            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue)
+          });
+        }
+
+        tempStyleSheetText += this.processNodeForStyleSheet(childNode, newLine, styleSheetIndent, props, index);
+      }
+    }
+
+    return tempStyleSheetText;
+  }
+
+  processNodeForCssText(node, props, index){
+    if(node.type === "rule-set"){
+      var declarations = [];
+
+      for(var x = 0; x < node.rules.length; x++){
+          declarations.push(<Declaration name={node.rules[x].name} value={node.rules[x].value} indent={props.settings.indent} key={x}/>)
+      }
+      return(<RuleSet selector={node.selector} key={index}>{declarations}</RuleSet>);
+    } else if(node.type === "comment" && props.settings.includeComments){
+      if(node.style === "single-line"){
+        return(<SingleLine key={index}>{node.rows[0].value}</SingleLine>);
+      } else if(node.style === "multi-line"){
+        var commentLines = [];
+
+        for(x = 0; x < node.rows.length; x++){
+          commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{node.rows[x].value}</div>);
+        }
+
+        return(<MultiLine key={index}>{commentLines}</MultiLine>);
+      } else if(node.style === "fancy"){
+        commentLines = [];
+
+        for(x = 0; x < node.rows.length; x++){
+          commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{node.rows[x].value}</div>);
+        }
+
+        return(<Fancy key={index}>{commentLines}</Fancy>);
+      } else if(node.style === "extra-fancy"){
+        commentLines = [];
+
+        for(x = 0; x < node.rows.length; x++){
+          commentLines.push(<div className='comment-line' key={x}><Indent number={props.settings.indent.number} type={props.settings.indent.type}/>{node.rows[x].value}</div>);
+        }
+
+        return(<ExtraFancy key={index}>{commentLines}</ExtraFancy>);
+      }
+    } else if(node.type === "loop"){
+      console.log("loop")
+
+      var loopNodes = [];
+
+      for(var z = node.start; z <= node.end; z++){
+        var childNode = this.copyObject(node.childNode);
+
+        var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
+
+        childNode.selector = node.childNode.selector.replace("{index}", z);
+
+        childNode.rules = [];
+
+        for(var y = 0; y < node.childNode.rules.length; y++){
+          childNode.rules.push({
+            name: node.childNode.rules[y].name,
+            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue)
+          });
+        }
+
+        loopNodes.push(this.processNodeForCssText(childNode, props, index + "-" + z));
+      }
+
+      return loopNodes;
+    }
+  }
+
+  copyObject(object){
+    return JSON.parse(JSON.stringify(object));
   }
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
