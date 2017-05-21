@@ -18,7 +18,7 @@ const CssText = (props) => {
             shareHandler={props.shareHandler}
             copyHandler={props.copyHandler}
           />
-          <h2>{props.preprocessor} <span className="accent-text">&nbsp;&mdash; {(new TextEncoder('utf-8').encode(props.styleSheetText)).length} bytes</span></h2>
+          <h2>{props.preprocessor} <span className="accent-text"> <span className="muted"> | </span>  {(new TextEncoder('utf-8').encode(props.styleSheetText)).length} bytes</span></h2>
         </header>
         {cssText}
       </section>

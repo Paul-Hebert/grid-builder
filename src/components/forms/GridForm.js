@@ -29,7 +29,7 @@ class GridForm extends Component {
     return (
       <section className="grid-form ui-column">
         <header className="ui-column-header">
-          <h2>Form</h2>
+          <h2>Grid Settings</h2>
         </header>
 
         <form autoComplete="off">
