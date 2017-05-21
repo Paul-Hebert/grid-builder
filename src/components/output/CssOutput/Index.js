@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import StyleSheet from "./StyleSheet";
-import CssText from "./CssText/Index";
-import Declaration from "./CssText/RuleSet/Declaration";
-import RuleSet from "./CssText/RuleSet/Index";
-import SingleLine from "./CssText/Comments/SingleLine";
-import MultiLine from "./CssText/Comments/MultiLine";
-import Fancy from "./CssText/Comments/Fancy";
-import ExtraFancy from "./CssText/Comments/ExtraFancy";
-import Indent from "./CssText/Indent";
+import AppliedCss from "./AppliedCss";
+import DisplayedCss from "./DisplayedCss/Index";
+import Declaration from "./DisplayedCss/RuleSet/Declaration";
+import RuleSet from "./DisplayedCss/RuleSet/Index";
+import SingleLine from "./DisplayedCss/Comments/SingleLine";
+import MultiLine from "./DisplayedCss/Comments/MultiLine";
+import Fancy from "./DisplayedCss/Comments/Fancy";
+import ExtraFancy from "./DisplayedCss/Comments/ExtraFancy";
+import Indent from "./DisplayedCss/Indent";
 
 const queryString = require('query-string');
 
@@ -21,8 +21,8 @@ class CssOutput extends Component {
     var cssState = this.buildCss(props);
 
     this.state = {
-        styleSheetText: cssState.styleSheetText,
-        cssText: cssState.cssText
+        appliedCss: cssState.appliedCss,
+        displayedCss: cssState.displayedCss
     };
   }
 
@@ -42,7 +42,7 @@ class CssOutput extends Component {
     }
 
 
-    var blob = new Blob([this.state.styleSheetText], {type: 'text/' + fileExtension});
+    var blob = new Blob([this.state.appliedCss], {type: 'text/' + fileExtension});
     if(window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, fileName);
     }
@@ -97,8 +97,8 @@ class CssOutput extends Component {
     var newState = this.buildCss(props)
 
     this.setState({
-      styleSheetText: newState.styleSheetText,
-      cssText: newState.cssText
+      appliedCss: newState.appliedCss,
+      displayedCss: newState.displayedCss
     });
   }
 
@@ -113,8 +113,8 @@ class CssOutput extends Component {
     var processedCssNodes = this.processCssNodes(nodes,props);
 
     return({
-      cssText: processedCssNodes.cssText,
-      styleSheetText: processedCssNodes.styleSheetText
+      displayedCss: processedCssNodes.displayedCss,
+      appliedCss: processedCssNodes.appliedCss
     });
   }
 
@@ -363,8 +363,8 @@ class CssOutput extends Component {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   processCssNodes(nodes,props){
-    var tempCssText = [];
-    var tempStyleSheetText = '';
+    var tempDisplayedCss = [];
+    var tempAppliedCss = '';
 
     var styleSheetIndent = '';
     for(var i = 0; i < props.settings.indent.number; i++){
@@ -383,74 +383,74 @@ class CssOutput extends Component {
     }
 
     for(i = 0; i < nodes.length; i++){
-      tempStyleSheetText += this.processNodeForStyleSheet(nodes[i], newLine, styleSheetIndent, props, i);
-      tempCssText.push(this.processNodeForCssText(nodes[i], props, i));
+      tempAppliedCss += this.processNodeForAppliedCss(nodes[i], newLine, styleSheetIndent, props, i);
+      tempDisplayedCss.push(this.processNodeForDisplayedCss(nodes[i], props, i));
     }
 
     return({
-      cssText: tempCssText,
-      styleSheetText: tempStyleSheetText
+      displayedCss: tempDisplayedCss,
+      appliedCss: tempAppliedCss
     });
   }
 
-  processNodeForStyleSheet(node, newLine, styleSheetIndent, props, index){
-    var tempStyleSheetText = "";
+  processNodeForAppliedCss(node, newLine, styleSheetIndent, props, index){
+    var tempAppliedCss = "";
     if(node.type === "rule-set"){
-      tempStyleSheetText += node.selector + "{" + newLine
+      tempAppliedCss += node.selector + "{" + newLine
 
       for(var x = 0; x < node.rules.length; x++){
-          tempStyleSheetText += styleSheetIndent + node.rules[x].name + ":" + node.rules[x].value + ";" + newLine;
+          tempAppliedCss += styleSheetIndent + node.rules[x].name + ":" + node.rules[x].value + ";" + newLine;
       }
 
-      tempStyleSheetText += "}" + newLine + newLine;
+      tempAppliedCss += "}" + newLine + newLine;
     } else if(node.type === "comment" && props.settings.includeComments){
       if(node.style === "single-line"){
         if(props.settings.minify){
-          tempStyleSheetText += "/*" + node.rows[0].value + "*/" + newLine;
+          tempAppliedCss += "/*" + node.rows[0].value + "*/" + newLine;
         } else{
-          tempStyleSheetText += "/* " + node.rows[0].value + " */" + newLine;
+          tempAppliedCss += "/* " + node.rows[0].value + " */" + newLine;
         }
       } else if(node.style === "multi-line"){
-        tempStyleSheetText += "/*" + newLine;  
+        tempAppliedCss += "/*" + newLine;  
 
         for(x = 0; x < node.rows.length; x++){
-          tempStyleSheetText += styleSheetIndent + node.rows[x].value + newLine;  
+          tempAppliedCss += styleSheetIndent + node.rows[x].value + newLine;  
         }
 
-        tempStyleSheetText += "*/" + newLine + newLine;  
+        tempAppliedCss += "*/" + newLine + newLine;  
       } else if(node.style === "fancy"){
         if(props.settings.minify){
-          tempStyleSheetText += "/*";
+          tempAppliedCss += "/*";
         } else{
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
         }
 
         for(x = 0; x < node.rows.length; x++){        
-          tempStyleSheetText += styleSheetIndent + node.rows[x].value + newLine;
+          tempAppliedCss += styleSheetIndent + node.rows[x].value + newLine;
         }
 
         if(props.settings.minify){
-          tempStyleSheetText += "*/";
+          tempAppliedCss += "*/";
         } else{
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
+          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
         }
       } else if(node.style === "extra-fancy"){
         if(props.settings.minify){
-          tempStyleSheetText += "/*";
+          tempAppliedCss += "/*";
         } else{
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
-          tempStyleSheetText += "/*----------------------------------------------" + newLine;
+          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          tempAppliedCss += "/*----------------------------------------------" + newLine;
         }
 
         for(x = 0; x < node.rows.length; x++){
-          tempStyleSheetText += styleSheetIndent + node.rows[x].value + newLine;
+          tempAppliedCss += styleSheetIndent + node.rows[x].value + newLine;
         }
 
         if(props.settings.minify){
-          tempStyleSheetText += "*/" + newLine;
+          tempAppliedCss += "*/" + newLine;
         } else{
-          tempStyleSheetText += "/*----------------------------------------------" + newLine;
-          tempStyleSheetText += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
+          tempAppliedCss += "/*----------------------------------------------" + newLine;
+          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
         }
       }
     } else if(node.type === "loop"){
@@ -470,14 +470,14 @@ class CssOutput extends Component {
           });
         }
 
-        tempStyleSheetText += this.processNodeForStyleSheet(childNode, newLine, styleSheetIndent, props, index);
+        tempAppliedCss += this.processNodeForAppliedCss(childNode, newLine, styleSheetIndent, props, index);
       }
     }
 
-    return tempStyleSheetText;
+    return tempAppliedCss;
   }
 
-  processNodeForCssText(node, props, index){
+  processNodeForDisplayedCss(node, props, index){
     if(node.type === "rule-set"){
       var declarations = [];
 
@@ -514,8 +514,6 @@ class CssOutput extends Component {
         return(<ExtraFancy key={index}>{commentLines}</ExtraFancy>);
       }
     } else if(node.type === "loop"){
-      console.log("loop")
-
       var loopNodes = [];
 
       for(var z = node.start; z <= node.end; z++){
@@ -534,7 +532,7 @@ class CssOutput extends Component {
           });
         }
 
-        loopNodes.push(this.processNodeForCssText(childNode, props, index + "-" + z));
+        loopNodes.push(this.processNodeForDisplayedCss(childNode, props, index + "-" + z));
       }
 
       return loopNodes;
@@ -552,16 +550,17 @@ class CssOutput extends Component {
   render(){
     return (
       <div>
-        <StyleSheet>{this.state.styleSheetText}</StyleSheet>
-        <CssText preprocessor={this.props.settings.preprocessor}
-                 minify={this.props.settings.minify}
-                 downloadHandler={this.download.bind(this)}
-                 shareHandler={this.share.bind(this)}
-                 copyHandler={this.copy.bind(this)}
-                 styleSheetText={this.state.styleSheetText}
+        <AppliedCss>{this.state.appliedCss}</AppliedCss>
+        <DisplayedCss 
+          preprocessor={this.props.settings.preprocessor}
+          minify={this.props.settings.minify}
+          downloadHandler={this.download.bind(this)}
+          shareHandler={this.share.bind(this)}
+          copyHandler={this.copy.bind(this)}
+          appliedCss={this.state.appliedCss}
         >
-          {this.state.cssText}
-        </CssText>
+          {this.state.displayedCss}
+        </DisplayedCss>
       </div>
     )
   }

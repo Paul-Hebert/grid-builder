@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StyleSheet = (props) => {
+const AppliedCss = (props) => {
   return (
       <style type="text/css">
           {props.children}
@@ -8,4 +8,4 @@ const StyleSheet = (props) => {
   );
 }
 
-export default StyleSheet;
+export default AppliedCss;
