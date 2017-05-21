@@ -22,7 +22,8 @@ class CssOutput extends Component {
 
     this.state = {
         appliedCss: cssState.appliedCss,
-        displayedCss: cssState.displayedCss
+        displayedCss: cssState.displayedCss,
+        downloadedCss: cssState.downloadedCss
     };
   }
 
@@ -42,7 +43,7 @@ class CssOutput extends Component {
     }
 
 
-    var blob = new Blob([this.state.appliedCss], {type: 'text/' + fileExtension});
+    var blob = new Blob([this.state.downloadedCss], {type: 'text/' + fileExtension});
     if(window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, fileName);
     }
@@ -114,7 +115,8 @@ class CssOutput extends Component {
 
     return({
       displayedCss: processedCssNodes.displayedCss,
-      appliedCss: processedCssNodes.appliedCss
+      appliedCss: processedCssNodes.appliedCss,
+      downloadedCss: processedCssNodes.downloadedCss
     });
   }
 
@@ -365,6 +367,7 @@ class CssOutput extends Component {
   processCssNodes(nodes,props){
     var tempDisplayedCss = [];
     var tempAppliedCss = '';
+    var tempDownloadedCss = '';
 
     var styleSheetIndent = '';
     for(var i = 0; i < props.settings.indent.number; i++){
@@ -383,74 +386,110 @@ class CssOutput extends Component {
     }
 
     for(i = 0; i < nodes.length; i++){
-      tempAppliedCss += this.processNodeForAppliedCss(nodes[i], newLine, styleSheetIndent, props, i);
+      tempAppliedCss += this.processNodeForAppliedCss(nodes[i], props);
+      tempDownloadedCss += this.processNodeForDownloadedCss(nodes[i], newLine, styleSheetIndent, props);
       tempDisplayedCss.push(this.processNodeForDisplayedCss(nodes[i], props, i));
     }
 
     return({
       displayedCss: tempDisplayedCss,
-      appliedCss: tempAppliedCss
+      appliedCss: tempAppliedCss,
+      downloadedCss: tempDownloadedCss
     });
   }
 
-  processNodeForAppliedCss(node, newLine, styleSheetIndent, props, index){
+  processNodeForAppliedCss(node, props){
     var tempAppliedCss = "";
     if(node.type === "rule-set"){
-      tempAppliedCss += node.selector + "{" + newLine
+      tempAppliedCss += node.selector + "{";
 
       for(var x = 0; x < node.rules.length; x++){
-          tempAppliedCss += styleSheetIndent + node.rules[x].name + ":" + node.rules[x].value + ";" + newLine;
+          tempAppliedCss += node.rules[x].name + ":" + node.rules[x].value + ";";
       }
 
-      tempAppliedCss += "}" + newLine + newLine;
+      tempAppliedCss += "}";
+    } else if(node.type === "loop"){
+      for(var z = node.start; z <= node.end; z++){
+        var childNode = this.copyObject(node.childNode);
+
+        var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
+
+        childNode.selector = node.childNode.selector.replace("{index}", z)
+
+        childNode.rules = [];
+
+        for(var y = 0; y < node.childNode.rules.length; y++){
+          childNode.rules.push({
+            name: node.childNode.rules[y].name,
+            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue)
+          });
+        }
+
+        tempAppliedCss += this.processNodeForAppliedCss(childNode, props);
+      }
+    }
+
+    return tempAppliedCss;
+  }
+
+processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
+    var tempDownloadedCss = "";
+    if(node.type === "rule-set"){
+      tempDownloadedCss += node.selector + "{" + newLine
+
+      for(var x = 0; x < node.rules.length; x++){
+          tempDownloadedCss += styleSheetIndent + node.rules[x].name + ":" + node.rules[x].value + ";" + newLine;
+      }
+
+      tempDownloadedCss += "}" + newLine + newLine;
     } else if(node.type === "comment" && props.settings.includeComments){
       if(node.style === "single-line"){
         if(props.settings.minify){
-          tempAppliedCss += "/*" + node.rows[0].value + "*/" + newLine;
+          tempDownloadedCss += "/*" + node.rows[0].value + "*/" + newLine;
         } else{
-          tempAppliedCss += "/* " + node.rows[0].value + " */" + newLine;
+          tempDownloadedCss += "/* " + node.rows[0].value + " */" + newLine;
         }
       } else if(node.style === "multi-line"){
-        tempAppliedCss += "/*" + newLine;  
+        tempDownloadedCss += "/*" + newLine;  
 
         for(x = 0; x < node.rows.length; x++){
-          tempAppliedCss += styleSheetIndent + node.rows[x].value + newLine;  
+          tempDownloadedCss += styleSheetIndent + node.rows[x].value + newLine;  
         }
 
-        tempAppliedCss += "*/" + newLine + newLine;  
+        tempDownloadedCss += "*/" + newLine + newLine;  
       } else if(node.style === "fancy"){
         if(props.settings.minify){
-          tempAppliedCss += "/*";
+          tempDownloadedCss += "/*";
         } else{
-          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          tempDownloadedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
         }
 
         for(x = 0; x < node.rows.length; x++){        
-          tempAppliedCss += styleSheetIndent + node.rows[x].value + newLine;
+          tempDownloadedCss += styleSheetIndent + node.rows[x].value + newLine;
         }
 
         if(props.settings.minify){
-          tempAppliedCss += "*/";
+          tempDownloadedCss += "*/";
         } else{
-          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
+          tempDownloadedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
         }
       } else if(node.style === "extra-fancy"){
         if(props.settings.minify){
-          tempAppliedCss += "/*";
+          tempDownloadedCss += "/*";
         } else{
-          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
-          tempAppliedCss += "/*----------------------------------------------" + newLine;
+          tempDownloadedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + newLine;
+          tempDownloadedCss += "/*----------------------------------------------" + newLine;
         }
 
         for(x = 0; x < node.rows.length; x++){
-          tempAppliedCss += styleSheetIndent + node.rows[x].value + newLine;
+          tempDownloadedCss += styleSheetIndent + node.rows[x].value + newLine;
         }
 
         if(props.settings.minify){
-          tempAppliedCss += "*/" + newLine;
+          tempDownloadedCss += "*/" + newLine;
         } else{
-          tempAppliedCss += "/*----------------------------------------------" + newLine;
-          tempAppliedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
+          tempDownloadedCss += "/*----------------------------------------------" + newLine;
+          tempDownloadedCss += "/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/" + newLine + newLine;
         }
       }
     } else if(node.type === "loop"){
@@ -470,11 +509,11 @@ class CssOutput extends Component {
           });
         }
 
-        tempAppliedCss += this.processNodeForAppliedCss(childNode, newLine, styleSheetIndent, props, index);
+        tempDownloadedCss += this.processNodeForAppliedCss(childNode, newLine, styleSheetIndent, props, index);
       }
     }
 
-    return tempAppliedCss;
+    return tempDownloadedCss;
   }
 
   processNodeForDisplayedCss(node, props, index){
@@ -557,7 +596,7 @@ class CssOutput extends Component {
           downloadHandler={this.download.bind(this)}
           shareHandler={this.share.bind(this)}
           copyHandler={this.copy.bind(this)}
-          appliedCss={this.state.appliedCss}
+          downloadedCss={this.state.downloadedCss}
         >
           {this.state.displayedCss}
         </DisplayedCss>
