@@ -8,6 +8,7 @@ import MultiLine from "./DisplayedCss/Comments/MultiLine";
 import Fancy from "./DisplayedCss/Comments/Fancy";
 import ExtraFancy from "./DisplayedCss/Comments/ExtraFancy";
 import Indent from "./DisplayedCss/Indent";
+import Loop from "./DisplayedCss/Loop";
 
 const queryString = require('query-string');
 
@@ -326,14 +327,14 @@ class CssOutput extends Component {
 
     var widthName = "width";
     var dynamicValue = 100 / props.settings.columns;
-    var dynamicTemplate = "{dynamicValue}%";
+    var dynamicTemplate = "{dynamicValue}{dynamicUnit}";
     var dynamicModifier = 0;
 
     if(props.settings.boxSizing === "content-box"){
       if(props.settings.gutter.unit === "%"){
         dynamicModifier = (props.settings.gutter.value * -2);
       } else{
-        dynamicTemplate = "calc({dynamicValue}% - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
+        dynamicTemplate = "calc({dynamicValue}{dynamicUnit} - " + (props.settings.gutter.value * 2) + props.settings.gutter.unit + ")";
       }
     }
 
@@ -348,6 +349,7 @@ class CssOutput extends Component {
       dynamicValue: dynamicValue,
       dynamicModifier: dynamicModifier,
       dynamicTemplate: dynamicTemplate,
+      dynamicUnit: "%",
       childNode: {
         type: "rule-set",
         selector: ".col-{index}",
@@ -421,7 +423,7 @@ class CssOutput extends Component {
         for(var y = 0; y < node.childNode.rules.length; y++){
           childNode.rules.push({
             name: node.childNode.rules[y].name,
-            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue)
+            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue).replace("{dynamicUnit}", node.dynamicUnit)
           });
         }
 
@@ -493,23 +495,33 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
         }
       }
     } else if(node.type === "loop"){
-      for(var z = node.start; z <= node.end; z++){
-        var childNode = this.copyObject(node.childNode);
+      if(props.settings.preprocessor === "CSS"){
+        for(var z = node.start; z <= node.end; z++){
+          var childNode = this.copyObject(node.childNode);
 
-        var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
+          var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
 
-        childNode.selector = node.childNode.selector.replace("{index}", z)
+          childNode.selector = node.childNode.selector.replace("{index}", z)
 
-        childNode.rules = [];
+          childNode.rules = [];
 
-        for(var y = 0; y < node.childNode.rules.length; y++){
-          childNode.rules.push({
-            name: node.childNode.rules[y].name,
-            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue)
-          });
+          for(var y = 0; y < node.childNode.rules.length; y++){
+            childNode.rules.push({
+              name: node.childNode.rules[y].name,
+              value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue).replace("{dynamicUnit}", node.dynamicUnit)
+            });
+          }
+
+          tempDownloadedCss += this.processNodeForAppliedCss(childNode, newLine, styleSheetIndent, props, index);
         }
-
-        tempDownloadedCss += this.processNodeForAppliedCss(childNode, newLine, styleSheetIndent, props, index);
+      } else if(props.settings.preprocessor === "SCSS"){
+        tempDownloadedCss += "This is a SCSS Loop";
+      } else if(props.settings.preprocessor === "SASS"){
+        tempDownloadedCss += "This is a SASS Loop";
+      } else if(props.settings.preprocessor === "LESS"){
+        tempDownloadedCss += "This is a LESS Loop";
+      } else if(props.settings.preprocessor === "Stylus"){
+        tempDownloadedCss += "This is a Stylus Loop";
       }
     }
 
@@ -521,9 +533,9 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
       var declarations = [];
 
       for(var x = 0; x < node.rules.length; x++){
-          declarations.push(<Declaration name={node.rules[x].name} value={node.rules[x].value} indent={props.settings.indent} key={x}/>)
+          declarations.push(<Declaration name={node.rules[x].name} value={node.rules[x].value} indent={props.settings.indent} nest={0} key={x}/>)
       }
-      return(<RuleSet selector={node.selector} key={index}>{declarations}</RuleSet>);
+      return(<RuleSet selector={node.selector} nest={0} space="1" indent={props.settings.indent} key={index}>{declarations}</RuleSet>);
     } else if(node.type === "comment" && props.settings.includeComments){
       if(node.style === "single-line"){
         return(<SingleLine key={index}>{node.rows[0].value}</SingleLine>);
@@ -553,28 +565,32 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
         return(<ExtraFancy key={index}>{commentLines}</ExtraFancy>);
       }
     } else if(node.type === "loop"){
-      var loopNodes = [];
+      if(props.settings.preprocessor === "CSS"){
+        var loopNodes = [];
 
-      for(var z = node.start; z <= node.end; z++){
-        var childNode = this.copyObject(node.childNode);
+        for(var z = node.start; z <= node.end; z++){
+          var childNode = this.copyObject(node.childNode);
 
-        var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
+          var dynamicValue = node.dynamicValue * z + node.dynamicModifier;
 
-        childNode.selector = node.childNode.selector.replace("{index}", z);
+          childNode.selector = node.childNode.selector.replace("{index}", z);
 
-        childNode.rules = [];
+          childNode.rules = [];
 
-        for(var y = 0; y < node.childNode.rules.length; y++){
-          childNode.rules.push({
-            name: node.childNode.rules[y].name,
-            value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue)
-          });
+          for(var y = 0; y < node.childNode.rules.length; y++){
+            childNode.rules.push({
+              name: node.childNode.rules[y].name,
+              value: node.dynamicTemplate.replace("{dynamicValue}", dynamicValue).replace("{dynamicUnit}", node.dynamicUnit)
+            });
+          }
+
+          loopNodes.push(this.processNodeForDisplayedCss(childNode, props, index + "-" + z));
         }
 
-        loopNodes.push(this.processNodeForDisplayedCss(childNode, props, index + "-" + z));
+        return loopNodes;
+      } else{
+        return(<Loop loopSettings={node} preprocessor={props.settings.preprocessor} indent={props.settings.indent} key={index}/>)
       }
-
-      return loopNodes;
     }
   }
 

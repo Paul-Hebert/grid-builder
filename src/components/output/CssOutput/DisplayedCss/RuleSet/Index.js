@@ -1,12 +1,25 @@
 import React from 'react';
+import Indent from '../Indent';
 
 const RuleSet = (props) => {
+  var spaces = [];
+
+  for(var i = 0; i < props.space; i++){
+    spaces.push(<div className="space" key={i}>&nbsp;</div>)
+  }
+
+  var nestIndent = [];
+
+  for(var x = 0; x < props.nest; x++) {
+    nestIndent.push(<Indent type={props.indent.type} number={props.indent.number} key={x}/>)
+  }
+
   return (
       <div className="rule-set">
-        <div><span className="selector">{props.selector}</span><span className="bracket">{'{'}</span></div>
+        <div>{nestIndent}<span className="selector">{props.selector}</span><span className="bracket">{'{'}</span></div>
           {props.children}
-        <div className="bracket">{'}'}</div>
-        <div className="space">&nbsp;</div>
+        <div>{nestIndent}<span className="bracket">{'}'}</span></div>
+        {spaces}
       </div>
   );
 }
