@@ -43,7 +43,6 @@ class CssOutput extends Component {
       fileName = "_" + fileName;
     }
 
-
     var blob = new Blob([this.state.downloadedCss], {type: 'text/' + fileExtension});
     if(window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, fileName);
@@ -100,7 +99,8 @@ class CssOutput extends Component {
 
     this.setState({
       appliedCss: newState.appliedCss,
-      displayedCss: newState.displayedCss
+      displayedCss: newState.displayedCss,
+      downloadedCss: newState.downloadedCss
     });
   }
 
@@ -449,7 +449,11 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
         if(props.settings.minify){
           tempDownloadedCss += "/*" + node.rows[0].value + "*/" + newLine;
         } else{
-          tempDownloadedCss += "/* " + node.rows[0].value + " */" + newLine;
+          if(props.settings.preprocessor === "CSS"){
+            tempDownloadedCss += "/* " + node.rows[0].value + " */" + newLine;
+          } else{
+            tempDownloadedCss += "// " + node.rows[0].value + newLine;            
+          }
         }
       } else if(node.style === "multi-line"){
         tempDownloadedCss += "/*" + newLine;  
