@@ -538,7 +538,7 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
       return(<RuleSet selector={node.selector} nest={0} space="1" indent={props.settings.indent} key={index}>{declarations}</RuleSet>);
     } else if(node.type === "comment" && props.settings.includeComments){
       if(node.style === "single-line"){
-        return(<SingleLine key={index}>{node.rows[0].value}</SingleLine>);
+        return(<SingleLine preprocessor={props.settings.preprocessor} key={index}>{node.rows[0].value}</SingleLine>);
       } else if(node.style === "multi-line"){
         var commentLines = [];
 
