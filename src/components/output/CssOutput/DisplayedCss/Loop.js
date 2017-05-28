@@ -25,7 +25,7 @@ const Loop = (props) => {
 
         return (
             <div className="loop">
-                <div>@for $i from {props.loopSettings.start} through {props.loopSettings.end} <span className="bracket">{'{'}</span></div>
+                <div>@for <span className="variable">$i</span> from {props.loopSettings.start} through {props.loopSettings.end} <span className="bracket">{'{'}</span></div>
                     <RuleSet selector={props.loopSettings.childNode.selector.replace("{index}","#{$i}")} nest="1" space="0" indent={props.indent}>{declarations}</RuleSet>
                 <div className="bracket">{'}'}</div>
             </div>

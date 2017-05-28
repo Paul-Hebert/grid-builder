@@ -5,6 +5,9 @@
         width:25%;
     }
 
+    // Basic color scheme taken from Prism and then modified:
+    // http://prismjs.com/
+
     .css-text{
         @include block();
 
@@ -27,6 +30,14 @@
         .value{
             color:#222;
         }        
+
+        .variable{
+            color:#e90;
+        }
+
+        .key-word{
+            color:#07a;
+        }
     }
 
     .minified{
