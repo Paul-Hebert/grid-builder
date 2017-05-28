@@ -516,7 +516,7 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
             });
           }
 
-          tempDownloadedCss += this.processNodeForAppliedCss(childNode, newLine, styleSheetIndent, props, index);
+          tempDownloadedCss += this.processNodeForDownloadedCss(childNode, newLine, styleSheetIndent, props, z);
         }
       } else if(props.settings.preprocessor === "SCSS"){
         tempDownloadedCss += "This is a SCSS Loop";
