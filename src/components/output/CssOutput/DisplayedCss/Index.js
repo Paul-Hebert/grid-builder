@@ -18,7 +18,7 @@ const DisplayedCss = (props) => {
             shareHandler={props.shareHandler}
             copyHandler={props.copyHandler}
           />
-          <h2>{props.preprocessor} <span className="accent-text"> <span className="muted"> | </span>  {(new TextEncoder('utf-8').encode(props.downloadedCss)).length} bytes</span></h2>
+          <h2>{props.preprocessor} <span className="accent-text"> <span className="muted"> | </span>  {props.fileSize} bytes</span></h2>
         </header>
         {displayedCss}
       </section>

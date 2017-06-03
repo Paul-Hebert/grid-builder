@@ -85,8 +85,13 @@ class CssOutput extends Component {
     }
   }
 
-  copy(){
-    console.log("copy");
+  copy() {
+    var textField = document.createElement('textarea');
+    textField.innerText = this.state.downloadedCss;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
   }
 
 
@@ -616,7 +621,7 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
           downloadHandler={this.download.bind(this)}
           shareHandler={this.share.bind(this)}
           copyHandler={this.copy.bind(this)}
-          downloadedCss={this.state.downloadedCss}
+          fileSize={new TextEncoder('utf-8').encode(this.state.downloadedCss).length}
         >
           {this.state.displayedCss}
         </DisplayedCss>
