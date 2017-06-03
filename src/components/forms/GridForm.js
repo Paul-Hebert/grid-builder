@@ -63,7 +63,7 @@ class GridForm extends Component {
             </label>  
 
             <label>
-              Row's Bottom margin
+              Row's Bottom Margin
 
               <IconInput icon="arrows-v">
                 <RangeAndNumberInput 
