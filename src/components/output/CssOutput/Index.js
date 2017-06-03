@@ -9,6 +9,7 @@ import Fancy from "./DisplayedCss/Comments/Fancy";
 import ExtraFancy from "./DisplayedCss/Comments/ExtraFancy";
 import Indent from "./DisplayedCss/Indent";
 import Loop from "./DisplayedCss/Loop";
+import Message from "../../misc/Message";
 
 const queryString = require('query-string');
 
@@ -24,7 +25,13 @@ class CssOutput extends Component {
     this.state = {
         appliedCss: cssState.appliedCss,
         displayedCss: cssState.displayedCss,
-        downloadedCss: cssState.downloadedCss
+        downloadedCss: cssState.downloadedCss,
+        message: {
+          exists: false,
+          classes: null,
+          header: null,
+          details: null
+        }
     };
   }
 
@@ -58,7 +65,8 @@ class CssOutput extends Component {
   }
 
   share(){
-    console.log(window.location.origin + "/?" + queryString.stringify(this.flattenObject(this.props.settings)));
+    this.copy(window.location.origin + "/?" + queryString.stringify(this.flattenObject(this.props.settings)));
+    this.displayMessage("success", "A special URL has been copied to your clipboard", "Paste the URL into the messaging service of your choice to share.")
   }
 
   flattenObject(oldObject){
@@ -85,15 +93,55 @@ class CssOutput extends Component {
     }
   }
 
-  copy() {
+  copy(text) {
     var textField = document.createElement('textarea');
-    textField.innerText = this.state.downloadedCss;
+    textField.innerText = text;
     document.body.appendChild(textField);
     textField.select();
-    document.execCommand('copy');
+    document.execCommand('copy'); 
     textField.remove();
+
+    this.displayMessage("success", "Code Copied to Clipboard", "")
   }
 
+  copyButton(){
+    this.copy(this.state.downloadedCss);
+  }
+
+  displayMessage(classes,header,details){
+    this.setState({
+      message: {
+        exists: true,
+        classes: classes,
+        header: header,
+        details: details
+      }
+    });
+  }
+
+  closeMessage(){
+    var that = this;
+    
+    this.setState({
+      message: {
+        exists: true,
+        classes: this.state.message.classes + " closing",
+        header: this.state.message.header,
+        details: this.state.message.details
+      }
+    });
+
+    setTimeout(function(){
+      that.setState({
+          message: {
+            exists: false,
+            classes: null,
+            header: null,
+            details: null
+          }
+      });
+    }, 300)
+  }
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // componentWillReceiveProps
@@ -620,11 +668,19 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
           minify={this.props.settings.minify}
           downloadHandler={this.download.bind(this)}
           shareHandler={this.share.bind(this)}
-          copyHandler={this.copy.bind(this)}
+          copyHandler={this.copyButton.bind(this)}
           fileSize={new TextEncoder('utf-8').encode(this.state.downloadedCss).length}
         >
           {this.state.displayedCss}
         </DisplayedCss>
+
+        <Message 
+          exists={this.state.message.exists}
+          classes={this.state.message.classes}
+          header={this.state.message.header}
+          details={this.state.message.details}
+          closeHandler={this.closeMessage.bind(this)}
+        />
       </div>
     )
   }

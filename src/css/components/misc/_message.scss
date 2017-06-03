@@ -1,0 +1,44 @@
+.message{
+    position:fixed;
+    top:$size-10;
+    right:$size-10;
+    background:$secondary-color;
+    padding:$size-5;
+    padding-right:$size-10;
+    cursor:pointer;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.6);
+    animation-fill-mode: forwards;
+    animation: fade-in 300ms;
+
+    &.closing{
+          animation: fade-out 300ms;
+    }
+
+    .fa-times-circle{
+        position:absolute;
+        top:calc(50% - 12pt);
+        right:$size-3;
+        font-size:$size-7;
+        color:$primary-color;
+    }
+
+    .message-details{
+        border-top:1px solid $third-color;
+        padding-top:$size-3;
+        margin-top: $size-3;
+
+        &:empty{
+            display:none;
+        }
+    }
+}
+
+@keyframes fade-out {
+    from {opacity: .95px;}
+    to {opacity: 0}
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: .95px}
+}
