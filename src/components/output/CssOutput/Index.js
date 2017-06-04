@@ -30,7 +30,8 @@ class CssOutput extends Component {
           exists: false,
           classes: null,
           header: null,
-          details: null
+          details: null,
+          count: 0
         }
     };
   }
@@ -66,7 +67,7 @@ class CssOutput extends Component {
 
   share(){
     this.copy(window.location.origin + "/?" + queryString.stringify(this.flattenObject(this.props.settings)));
-    this.displayMessage("success", "A special URL has been copied to your clipboard", "Paste the URL into the messaging service of your choice to share.")
+    this.displayMessage("success", "A special URL has been copied to your clipboard", "Paste the URL into the messaging service of your choice to share.", 6000)
   }
 
   flattenObject(oldObject){
@@ -101,46 +102,66 @@ class CssOutput extends Component {
     document.execCommand('copy'); 
     textField.remove();
 
-    this.displayMessage("success", "Code Copied to Clipboard", "")
+    this.displayMessage("success", "Code Copied to Clipboard", "", 6000)
   }
 
   copyButton(){
     this.copy(this.state.downloadedCss);
   }
 
-  displayMessage(classes,header,details){
+  displayMessage(classes, header, details, delay){
+    var currentCount = this.state.message.count + 1;
+
     this.setState({
       message: {
         exists: true,
+        closing:false,
         classes: classes,
         header: header,
-        details: details
+        details: details,
+        count: currentCount
       }
     });
+
+    var that = this;
+
+    if(delay !== null){
+      setTimeout(function(){
+        if(that.state.message.count === currentCount){
+          that.closeMessage();
+        }
+      }, delay);
+    }
   }
 
   closeMessage(){
-    var that = this;
-    
-    this.setState({
-      message: {
-        exists: true,
-        classes: this.state.message.classes + " closing",
-        header: this.state.message.header,
-        details: this.state.message.details
-      }
-    });
-
-    setTimeout(function(){
-      that.setState({
-          message: {
-            exists: false,
-            classes: null,
-            header: null,
-            details: null
-          }
+    if(this.state.message.exists && ! this.state.message.closing){
+      this.setState({
+        message: {
+          exists: true,
+          closing: true,
+          classes: this.state.message.classes,
+          header: this.state.message.header,
+          details: this.state.message.details,
+          count: this.state.message.count
+        }
       });
-    }, 300)
+
+      var that = this;
+
+      setTimeout(function(){
+        that.setState({
+            message: {
+              exists: false,
+              closing:false,
+              classes: null,
+              header: null,
+              details: null,
+              count: that.state.message.count
+            }
+        });
+      }, 300);
+    }
   }
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -676,6 +697,7 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
 
         <Message 
           exists={this.state.message.exists}
+          closing={this.state.message.closing}
           classes={this.state.message.classes}
           header={this.state.message.header}
           details={this.state.message.details}
