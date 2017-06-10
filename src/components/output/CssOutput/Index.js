@@ -67,7 +67,7 @@ class CssOutput extends Component {
 
   share(){
     this.copy(window.location.origin + "/?" + queryString.stringify(this.flattenObject(this.props.settings)));
-    this.displayMessage("success", "A special URL has been copied to your clipboard", "Paste the URL into the messaging service of your choice to share.", 6000)
+    this.displayMessage("success", "A special URL has been copied to your clipboard.", "Paste the URL into the messaging service of your choice to share.", 6000)
   }
 
   flattenObject(oldObject){
@@ -102,7 +102,7 @@ class CssOutput extends Component {
     document.execCommand('copy'); 
     textField.remove();
 
-    this.displayMessage("success", this.props.settings.preprocessor + " Code Copied to Clipboard", "", 6000)
+    this.displayMessage("success", this.props.settings.preprocessor + " Code Copied to Clipboard.", "", 6000)
   }
 
   copyButton(){

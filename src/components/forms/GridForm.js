@@ -25,7 +25,25 @@ class GridForm extends Component {
     this.props.formHandler(currentState);
   }
 
+  componentWillReceiveProps(props){
+    if(props.settings.preprocessor !== "CSS" && props.settings.minify){
+      this.handler(['minify'], false);
+      console.log('bing');
+    }
+  }
+
   render() {
+    var minificationSection = "";
+    if(this.props.settings.preprocessor === "CSS"){
+      minificationSection = <label>
+                              <Checkbox value={this.props.settings.minify}
+                                        handler={this.handler}
+                                        names={['minify']}
+                              /> Minify Code
+                            </label>;
+    }
+
+
     return (
       <section className="grid-form ui-column">
         <header className="ui-column-header">
@@ -155,12 +173,7 @@ class GridForm extends Component {
               /> Include Comments
             </label>
 
-            <label>
-              <Checkbox value={this.props.settings.minify}
-                        handler={this.handler}
-                        names={['minify']}
-              /> Minify Code
-            </label>
+            { minificationSection }
           </section>
         </form>
       </section>
