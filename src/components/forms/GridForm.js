@@ -52,7 +52,7 @@ class GridForm extends Component {
         <form autoComplete="off">
           <section>          
             <header>
-              <h3>Columns</h3>
+              <h3>Grid Layout</h3>
             </header>
 
             <label> 
@@ -110,7 +110,6 @@ class GridForm extends Component {
                   <option value="floats">Floated</option>
                   <option value="inline-block">Inline Block</option>
                   <option value="flexbox">Flexbox</option>
-                  <option value="css-grid">CSS Grid</option>
                 </Select>
               </IconInput>
             </label>
