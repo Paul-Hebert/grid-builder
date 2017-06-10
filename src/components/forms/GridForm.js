@@ -28,7 +28,6 @@ class GridForm extends Component {
   componentWillReceiveProps(props){
     if(props.settings.preprocessor !== "CSS" && props.settings.minify){
       this.handler(['minify'], false);
-      console.log('bing');
     }
   }
 
