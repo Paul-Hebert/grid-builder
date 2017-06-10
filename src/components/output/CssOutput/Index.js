@@ -8,7 +8,7 @@ import MultiLine from "./DisplayedCss/Comments/MultiLine";
 import Fancy from "./DisplayedCss/Comments/Fancy";
 import ExtraFancy from "./DisplayedCss/Comments/ExtraFancy";
 import Indent from "./DisplayedCss/Indent";
-import Loop from "./DisplayedCss/Loop";
+import Loop from "./DisplayedCss/Loops/Index";
 import Message from "../../misc/Message";
 
 const queryString = require('query-string');
