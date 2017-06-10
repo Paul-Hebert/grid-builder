@@ -103,20 +103,6 @@ class GridForm extends Component {
             </header>
 
             <label>
-              Preprocessors
-
-              <IconInput icon="code">
-                <Select handler={this.handler} names={["preprocessor"]} value={this.props.settings.preprocessor}>
-                  <option value="CSS">None</option>
-                  <option value="SCSS">SCSS</option>
-                  <option value="SASS">SASS</option>
-                  <option value="LESS">LESS</option>
-                  <option value="Stylus">Stylus</option>
-                </Select>
-              </IconInput>
-            </label>
-
-            <label>
               Strategy
 
               <IconInput icon="lightbulb-o">
@@ -145,6 +131,21 @@ class GridForm extends Component {
             <header>
               <h3>Code Formatting</h3>
             </header>
+
+            <label>
+              CSS Preprocessor
+
+              <IconInput icon="code">
+                <Select handler={this.handler} names={["preprocessor"]} value={this.props.settings.preprocessor}>
+                  <option value="CSS">None</option>
+                  <option value="SCSS">SCSS</option>
+                  <option value="SASS">SASS</option>
+                  <option value="LESS">LESS</option>
+                  <option value="Stylus">Stylus</option>
+                </Select>
+              </IconInput>
+            </label>
+
             <label>
               Indentation
 
