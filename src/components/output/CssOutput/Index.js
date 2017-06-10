@@ -102,7 +102,7 @@ class CssOutput extends Component {
     document.execCommand('copy'); 
     textField.remove();
 
-    this.displayMessage("success", "Code Copied to Clipboard", "", 6000)
+    this.displayMessage("success", this.props.settings.preprocessor + " Code Copied to Clipboard", "", 6000)
   }
 
   copyButton(){
