@@ -3,7 +3,7 @@ import React from 'react';
 const SassVariableDeclaration = (props) => {
     return(
         <div className='variable-declaration'>
-            ${props.name}
+            <span className="variable">${props.name}</span>
             <span className="colon">:</span>
             &nbsp;
             {props.value}
