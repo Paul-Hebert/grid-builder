@@ -9,6 +9,7 @@ import Fancy from "./DisplayedCss/Comments/Fancy";
 import ExtraFancy from "./DisplayedCss/Comments/ExtraFancy";
 import Indent from "./DisplayedCss/Indent";
 import Loop from "./DisplayedCss/Loops/Index";
+import VariableDeclaration from "./DisplayedCss/VariableDeclarations/Index";
 import Message from "../../misc/Message";
 
 const queryString = require('query-string');
@@ -207,7 +208,42 @@ class CssOutput extends Component {
             value: "Custom Grid"
           }
         ]
-      },
+      }
+    ];
+
+    if(props.settings.preprocessor !== "CSS"){
+      nodes.push(
+        {
+          type: "comment",
+          style:"fancy",
+          rows:[
+            {
+              value: "Variable Declarations"
+            },
+            {
+              value: "---------------------"
+            },
+            {
+              value: "Edit these to update the grid manually."
+            }
+          ]
+        },
+        {
+          type: "variable-declaration",
+          name: "columns",
+          spaces: 0,
+          value: props.settings.columns
+        },
+        {
+          type: "variable-declaration",
+          name: "gutter-width",
+          spaces: 1,
+          value: props.settings.gutter.value +  props.settings.gutter.unit
+        }
+      );
+    }
+
+    nodes.push(
       {
         type: "comment",
         style:"fancy",
@@ -217,7 +253,7 @@ class CssOutput extends Component {
           }
         ]
       }
-    ];
+    );
 
     if(props.settings.strategy === "inline-block"){
       nodes.push({
@@ -669,6 +705,8 @@ processNodeForDownloadedCss(node, newLine, styleSheetIndent, props, index){
       } else{
         return(<Loop loopSettings={node} preprocessor={props.settings.preprocessor} indent={props.settings.indent} key={index}/>)
       }
+    } else if(node.type === "variable-declaration"){
+        return(<VariableDeclaration name={node.name} value={node.value} spaces={node.spaces} preprocessor={props.settings.preprocessor} key={index}/>)      
     }
   }
 
