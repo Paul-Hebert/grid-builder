@@ -29,10 +29,7 @@ RuleSet.propTypes = {
     nest: PropTypes.number.isRequired,
     space: PropTypes.number.isRequired,
     selector: PropTypes.string.isRequired,
-    indent: PropTypes.shape({
-        number: PropTypes.number.isRequired,
-        type: PropTypes.string.isRequired
-    })
+    indent: PropTypes.arrayOf(PropTypes.shape({ Indent }.propTypes))
 }
 
 export default RuleSet;
