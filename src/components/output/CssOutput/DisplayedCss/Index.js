@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Actions from './Actions';
 
 const DisplayedCss = (props) => {
@@ -23,6 +24,14 @@ const DisplayedCss = (props) => {
         {displayedCss}
       </section>
   );
+}
+
+DisplayedCss.PropTypes = {
+  preprocessor: PropTypes.string.isRequired,
+  fileSize: PropTypes.number.isRequired,
+  downloadHandler: PropTypes.func.isRequired,
+  shareHandler: PropTypes.func.isRequired,
+  copyHandler: PropTypes.func.isRequired
 }
 
 export default DisplayedCss;

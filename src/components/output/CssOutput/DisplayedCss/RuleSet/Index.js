@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Indent from '../Indent';
 
 const RuleSet = (props) => {
@@ -22,6 +23,16 @@ const RuleSet = (props) => {
         {spaces}
       </div>
   );
+}
+
+RuleSet.propTypes = {
+    nest: PropTypes.number.isRequired,
+    space: PropTypes.number.isRequired,
+    selector: PropTypes.string.isRequired,
+    indent: PropTypes.shape({
+        number: PropTypes.number.isRequired,
+        type: PropTypes.string.isRequired
+    })
 }
 
 export default RuleSet;

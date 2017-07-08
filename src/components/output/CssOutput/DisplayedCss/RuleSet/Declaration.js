@@ -24,6 +24,10 @@ const Declaration = (props) => {
 
 Declaration.propTypes = {
     nest: PropTypes.number.isRequired,
+    indent: PropTypes.shape({
+        number: PropTypes.number.isRequired,
+        type: PropTypes.string.isRequired
+    })
 }
 
 export default Declaration;

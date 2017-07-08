@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Indent = (props) => {
     var indentation = "";
@@ -15,6 +16,11 @@ const Indent = (props) => {
     }
 
     return (<span className="indent">{indentation}</span>);
+}
+
+Indent.PropTypes = {
+  type: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired
 }
 
 export default Indent;

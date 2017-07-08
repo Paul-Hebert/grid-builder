@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SingleLine = (props) => {  
   if(props.preprocessor === "CSS"){
@@ -8,4 +9,9 @@ const SingleLine = (props) => {
   }
 }
 
+SingleLine.propTypes = {
+    preprocessor: PropTypes.string.isRequired
+}
+
 export default SingleLine;
+

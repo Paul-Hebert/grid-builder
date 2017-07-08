@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Tooltip from "../../../misc/Tooltip"
 
 class Actions extends Component {
@@ -17,6 +18,12 @@ class Actions extends Component {
        </nav>
     );
   }
+}
+
+Actions.PropTypes = {
+  downloadHandler: PropTypes.func.isRequired,
+  shareHandler: PropTypes.func.isRequired,
+  copyHandler: PropTypes.func.isRequired
 }
 
 export default Actions;
