@@ -6,7 +6,7 @@ Note: This project is a work-in-progress.
 
 ## Technical Choices
 
-This was built using React and the Create React App generator.
+This was built using React and the Create React App generator. It uses SCSS as the CSS preprocessor.
 
 ## Installation
 
