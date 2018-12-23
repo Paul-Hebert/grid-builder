@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = (props) => {
   return (
-      <header className="header">Robo Grids</header>
+      <header className="header">Gridley CSS Grid Generator</header>
   );
 }
 
