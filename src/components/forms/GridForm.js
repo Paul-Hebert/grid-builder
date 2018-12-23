@@ -131,7 +131,7 @@ class GridForm extends Component {
               <h3>Code Formatting</h3>
             </header>
 
-            <label>
+            {/*<label>
               CSS Preprocessor
 
               <IconInput icon="code">
@@ -143,7 +143,7 @@ class GridForm extends Component {
                   <option value="Stylus">Stylus</option>
                 </Select>
               </IconInput>
-            </label>
+            </label>*/}
 
             <label>
               Indentation
