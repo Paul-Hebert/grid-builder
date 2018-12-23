@@ -1,7 +1,9 @@
-.grid-form{
-    width:25%;
-
-    .ui-column-header{
+@media #{$medium-plus}{
+    .grid-form{
         width:25%;
+
+        .ui-column-header{
+            width:25%;
+        }
     }
 }

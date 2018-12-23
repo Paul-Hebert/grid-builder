@@ -1,10 +1,5 @@
 .grid-output{
     background:$third-color;
-    width:50%;
-    
-    .ui-column-header{
-        width:50%;
-    }
 
     figure{
         @include block();
@@ -18,6 +13,16 @@
                 padding-left:0;
                 padding-right:0;
             }
+        }
+    }
+}
+
+@media #{$medium-plus}{
+    .grid-output{
+        width:50%;
+        
+        .ui-column-header{
+            width:50%;
         }
     }
 }

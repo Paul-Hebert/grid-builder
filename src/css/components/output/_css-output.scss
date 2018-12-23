@@ -1,10 +1,4 @@
 .css-output{
-    width:25%;
-
-    .ui-column-header{
-        width:25%;
-    }
-
     // Basic color scheme taken from Prism and then modified:
     // http://prismjs.com/
 
@@ -56,6 +50,16 @@
     .unminified{
         wbr{
             display:none;
+        }
+    }
+}
+
+@media #{$medium-plus}{
+    .css-output{
+        width:25%;
+    
+        .ui-column-header{
+            width:25%;
         }
     }
 }
