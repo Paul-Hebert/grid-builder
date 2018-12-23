@@ -5,11 +5,11 @@
   "dependencies": {
     "query-string": "^4.3.4",
     "react": "^15.5.3",
-    "react-dom": "^15.5.3"
-  },
-  "devDependencies": {
+    "react-dom": "^15.5.3",
     "create-react-app-sass": "^1.1.0",
     "react-scripts": "0.9.5"
+  },
+  "devDependencies": {
   },
   "scripts": {
     "start": "react-scripts-with-sass start",
