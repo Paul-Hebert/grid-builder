@@ -1,9 +1,12 @@
 .css-output{
-    // Basic color scheme taken from Prism and then modified:
-    // http://prismjs.com/
 
     .css-text{
         @include block();
+        max-width: 100%;
+        overflow: auto;
+    
+        // Color scheme taken from Prism and then modified:
+        // http://prismjs.com/
 
         .comment{
             color: slategray;
