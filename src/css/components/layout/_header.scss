@@ -1,5 +1,8 @@
 .header{
     @include dark-block();
-    height:$header-height;   
-    font-size:$size-6; 
+    font-size:$size-6;
+
+    @media #{$medium-plus}{
+        min-height:$header-height;   
+    } 
 }
