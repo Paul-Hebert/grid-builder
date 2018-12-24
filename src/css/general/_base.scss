@@ -24,6 +24,10 @@ $ui-header-height: $size-10;
 
         h2{
             font-size:$size-6;
+
+            .accent-text{
+                white-space: nowrap;
+            }
         }
     }
 }
